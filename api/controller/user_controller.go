@@ -17,13 +17,24 @@ func NewController(service user.Service) *UserController {
 }
 
 func (controller *UserController) FindAll(c *gin.Context) {
-	users, err := controller.service.FindAll()
+	data, err := controller.service.FindAll()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	var userResponses []user.UserReponse
+	for _, v := range data {
+		userResponses = append(userResponses, user.UserReponse{
+			ID:    int(v.ID),
+			Name:  v.Name,
+			Email: v.Email,
+			Auth:  v.Auth,
+		})
+	}
+
 	c.JSON(http.StatusOK, gin.H{
-		"data": users,
+		"data": data,
 		"meta": gin.H{},
 	})
 }
@@ -40,8 +51,11 @@ func (controler *UserController) Me(ctx *gin.Context) {
 		})
 		return
 	}
+
+	userResponses := userResponses(user)
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"data": user,
+		"data": userResponses,
 		"meta": gin.H{
 			"status":  true,
 			"message": "Success",
