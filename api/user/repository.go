@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	FindAll() (entity.User, error)
+	FindAll() ([]entity.User, error)
 	FindByEmail(email string) (entity.User, error)
 	Me(user_id int) (entity.User, error)
 }
@@ -19,8 +19,8 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll() (entity.User, error) {
-	var user entity.User
+func (r *repository) FindAll() ([]entity.User, error) {
+	var user []entity.User
 	err := r.db.Preload("Auth").Find(&user).Error
 	return user, err
 }
