@@ -3,7 +3,7 @@ package user
 import "api/entity"
 
 type Service interface {
-	FindAll() (entity.User, error)
+	FindAll() ([]entity.User, error)
 	FindByEmail(email string) (entity.User, error)
 	Me(user_id int) (entity.User, error)
 }
@@ -15,7 +15,7 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (service *service) FindAll() (entity.User, error) {
+func (service *service) FindAll() ([]entity.User, error) {
 	return service.repository.FindAll()
 }
 
