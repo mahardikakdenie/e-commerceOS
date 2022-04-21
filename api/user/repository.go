@@ -21,7 +21,7 @@ func NewRepository(db *gorm.DB) *repository {
 
 func (r *repository) FindAll() ([]entity.User, error) {
 	var user []entity.User
-	err := r.db.Preload("Auth").Find(&user).Error
+	err := r.db.Preload("Auth").Preload("Role").Find(&user).Error
 	return user, err
 }
 
@@ -33,6 +33,6 @@ func (r *repository) FindByEmail(email string) (entity.User, error) {
 
 func (r *repository) Me(user_id int) (entity.User, error) {
 	var user entity.User
-	err := r.db.Preload("Auth").Where("id = ?", user_id).Find(&user).Error
+	err := r.db.Preload("Role").Where("id = ?", user_id).Find(&user).Error
 	return user, err
 }

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"api/helper"
 	"api/middleware"
 	"api/user"
 	"net/http"
@@ -30,11 +31,12 @@ func (controller *UserController) FindAll(c *gin.Context) {
 			Name:  v.Name,
 			Email: v.Email,
 			Auth:  v.Auth,
+			Role:  v.Role,
 		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"data": data,
+		"data": userResponses,
 		"meta": gin.H{},
 	})
 }
@@ -52,7 +54,7 @@ func (controler *UserController) Me(ctx *gin.Context) {
 		return
 	}
 
-	userResponses := userResponses(user)
+	userResponses := helper.UserResponses(user)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"data": userResponses,

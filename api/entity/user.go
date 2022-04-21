@@ -7,5 +7,7 @@ type User struct {
 	Name     string
 	Email    string
 	Password string
+	RoleId   uint `gorm:"foreignkey:RoleID"`
+	Role     Role `json:"role"`
 	Auth     []Auth
 }

@@ -41,6 +41,7 @@ func (s *service) Register(request user.UserRequest) (entity.User, error) {
 		Name:     request.Name,
 		Email:    request.Email,
 		Password: request.Password,
+		RoleId:   uint(request.RoleId),
 	}
 	return s.repository.Register(user)
 }

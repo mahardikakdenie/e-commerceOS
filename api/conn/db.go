@@ -21,11 +21,11 @@ func ConnectionPgsqlDB(db_host string, db_user string, db_password string, db_na
 
 	DBPgsql = db
 
-	err = db.AutoMigrate(&entity.User{}, &entity.Auth{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Auth{}, &entity.Role{}, &entity.TShirt{})
 	if err != nil {
 		db.DisableForeignKeyConstraintWhenMigrating = true
-		db.AutoMigrate(&entity.User{}, &entity.Auth{})
+		db.AutoMigrate(&entity.User{}, &entity.Auth{}, &entity.Role{}, &entity.TShirt{})
 		db.DisableForeignKeyConstraintWhenMigrating = false
-		db.AutoMigrate(&entity.User{}, &entity.Auth{})
+		db.AutoMigrate(&entity.User{}, &entity.Auth{}, &entity.Role{}, &entity.TShirt{})
 	}
 }

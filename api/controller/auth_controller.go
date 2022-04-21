@@ -2,10 +2,12 @@ package controller
 
 import (
 	"api/auth"
+	"api/helper"
 	"api/user"
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,7 +38,7 @@ func (controller *AuthController) Login(ctx *gin.Context) {
 		return
 	}
 
-	check := CheckPasswordHash(password, user.Password)
+	check := helper.CheckPasswordHash(password, user.Password)
 	if !check {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"meta": gin.H{
@@ -68,7 +70,7 @@ func (controller *AuthController) Login(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"meta": gin.H{},
-		"data": auth,
+		"data": auth.AuthToken,
 	})
 }
 
@@ -77,12 +79,15 @@ func (controller *AuthController) Register(ctx *gin.Context) {
 
 	password := ctx.PostForm("password")
 
-	hash_password, _ := hashPassword(password)
+	hash_password, _ := helper.HashPassword(password)
+	roleId := ctx.PostForm("role_id")
+	roleIdString, _ := strconv.Atoi(roleId)
 
 	userRequest = user.UserRequest{
 		Name:     ctx.PostForm("name"),
 		Email:    ctx.PostForm("email"),
 		Password: hash_password,
+		RoleId:   roleIdString,
 	}
 
 	user, err := controller.authRepository.Register(userRequest)
@@ -92,6 +97,7 @@ func (controller *AuthController) Register(ctx *gin.Context) {
 			"meta": gin.H{
 				"status":  false,
 				"message": "User already exists",
+				"errors ": err.Error(),
 			},
 			"data": gin.H{},
 		})
