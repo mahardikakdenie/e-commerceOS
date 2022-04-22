@@ -10,6 +10,7 @@ type TShirt struct {
 	Price       int    `gorm:"type:int"`
 	Stock       int    `gorm:"type:int"`
 	Image       string `gorm:"type:varchar(255)"`
+	Status      string `gorm:"type:varchar(100)"`
 	UserId      uint   `gorm:"foreignkey:UserID"`
 	User        User   `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

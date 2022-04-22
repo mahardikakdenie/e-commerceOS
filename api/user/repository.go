@@ -20,8 +20,8 @@ func NewRepository(db *gorm.DB) *repository {
 }
 
 func (r *repository) FindAll() ([]entity.User, error) {
-	var user []entity.User
-	err := r.db.Preload("Auth").Preload("Role").Find(&user).Error
+	var user []entity.User                                        // Fetching data from FOlder Entity User
+	err := r.db.Preload("Auth").Preload("Role").Find(&user).Error // quuery for fecth data from database
 	return user, err
 }
 
