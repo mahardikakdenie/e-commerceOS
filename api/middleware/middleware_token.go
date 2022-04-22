@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"api/auth"
-	"net/http"
+	"api/helper"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -14,37 +14,23 @@ func MyMiddleware(service auth.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		tokens := strings.Split(ctx.Request.Header.Get("Authorization"), "Bearer ")[1]
 		if tokens == "" {
-			ctx.JSON(http.StatusUnauthorized, gin.H{
-				"meta": gin.H{
-					"status":  false,
-					"message": "Unauthorized",
-				},
-				"data": gin.H{},
-			})
+			helper.Exception(ctx, false, "Unauthorized", nil)
 			ctx.Abort()
 			return
 		}
 		token, err := service.FindByToken(tokens)
 		if token.UserId == 0 || token.CreatedAt.IsZero() || err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{
-				"meta": gin.H{
-					"status":  false,
-					"message": "Token is incorrect",
-				},
-				"data": gin.H{},
-			})
+			helper.Exception(ctx, false, "Token is incorrect", nil)
 			ctx.Abort()
 			return
 		}
 		UserId = token.UserId
-		// ctx.Next()
 
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, gin.H{
-				"message": "Unauthorized",
-			})
+			helper.Exception(ctx, false, "Token is incorrect", nil)
 			ctx.Abort()
 			return
 		}
+		ctx.Next()
 	}
 }
