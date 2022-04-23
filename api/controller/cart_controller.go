@@ -89,12 +89,12 @@ func (c *CartController) Update(ctx *gin.Context) {
 	var request cart.CartRequest
 	request = cart.CartRequest{
 		TShirtID: helper.CheckerCartTshirtId(uint(tshirt_id), cartId),
-		UserID:   helper.CheckerCartUserId(uint(middleware.UserId), cartId),
+		UserID:   uint(middleware.UserId),
 		Quantity: helper.CheckCartQuantity(quantity, cartId),
 		Status:   helper.CheckCartStatus(ctx.PostForm("status"), cartId),
 	}
 
-	data, err := c.service.Updated(request)
+	data, err := c.service.Updated(request, id)
 	if err != nil {
 		helper.Exception(ctx, false, "Failed to update cart", nil)
 		return

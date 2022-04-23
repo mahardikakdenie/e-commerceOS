@@ -10,7 +10,7 @@ type Service interface {
 	Created(request CartRequest) (entity.Cart, error)
 	FindById(id int) (entity.Cart, error)
 	Deleted(id int) (entity.Cart, error)
-	Updated(request CartRequest) (entity.Cart, error)
+	Updated(request CartRequest, id int) (entity.Cart, error)
 }
 type service struct {
 	repository Repository
@@ -30,7 +30,7 @@ func (service *service) Created(request CartRequest) (entity.Cart, error) {
 		UserID:   uint(middleware.UserId),
 		TShirtID: request.TShirtID,
 		Quantity: request.Quantity,
-		Status:   request.Status,
+		Status:   "pending",
 	}
 	carts, err := service.repository.Created(cart)
 	return carts, err
@@ -47,14 +47,14 @@ func (s *service) Deleted(id int) (entity.Cart, error) {
 	return delete_cart, err
 }
 
-func (s *service) Updated(request CartRequest) (entity.Cart, error) {
-	var cart entity.Cart
+func (s *service) Updated(request CartRequest, id int) (entity.Cart, error) {
+	cart, err := s.repository.FindById(id)
 	cart = entity.Cart{
 		UserID:   uint(middleware.UserId),
 		TShirtID: request.TShirtID,
 		Quantity: request.Quantity,
 		Status:   request.Status,
 	}
-	carts, err := s.repository.Update(cart)
+	carts, err := s.repository.Updated(cart)
 	return carts, err
 }
