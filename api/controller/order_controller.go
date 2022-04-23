@@ -3,6 +3,7 @@ package controller
 import (
 	"api/helper"
 	"api/middleware"
+	"api/order"
 	orders "api/order"
 	"strconv"
 
@@ -90,19 +91,19 @@ func (c *OrderController) Store(ctx *gin.Context) {
 func (c *OrderController) Update(ctx *gin.Context) {
 	id_string := ctx.Param("id")
 	id, _ := strconv.Atoi(id_string)
-	order, err := c.service.FindById(id)
+	dataOrder, err := c.service.FindById(id)
 	if err != nil {
 		helper.Exception(ctx, false, err.Error(), nil)
 		return
 	}
 	tshirt_id, _ := strconv.Atoi(ctx.PostForm("tshirt_id"))
 	quantity, _ := strconv.Atoi(ctx.PostForm("quantity"))
-	var request orders.OrderRequest
-	request = orders.OrderRequest{
-		Status:   helper.CheckStatus(ctx.PostForm("status"), order),
-		Address:  helper.CheckAddress(ctx.PostForm("address"), order),
-		TShirtID: helper.CheckerTshirtId(uint(tshirt_id), order),
-		Quantity: helper.CheckQuantity(quantity, order),
+	var request order.OrderRequest
+	request = order.OrderRequest{
+		Status:   helper.CheckStatus(ctx.PostForm("status"), dataOrder),
+		Address:  helper.CheckAddress(ctx.PostForm("address"), dataOrder),
+		TShirtID: helper.CheckerTshirtId(uint(tshirt_id), dataOrder),
+		Quantity: helper.CheckQuantity(quantity, dataOrder),
 	}
 	data, err := c.service.Updated(id, request)
 	if err != nil {
