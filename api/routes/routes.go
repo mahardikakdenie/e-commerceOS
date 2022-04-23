@@ -2,6 +2,7 @@ package routes
 
 import (
 	"api/auth"
+	"api/cart"
 	"api/controller"
 	"api/middleware"
 	orders "api/order"
@@ -44,6 +45,10 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	orderService := orders.NewService(orderRepository)
 	orderController := controller.NewOrderController(orderService)
 
+	cartRepository := cart.NewRepository(db)
+	cartService := cart.NewService(cartRepository)
+	cartController := controller.NewCartController(cartService)
+
 	MyMiddleware := middleware.MyMiddleware(authService)
 
 	v1 := router.Group("v1")
@@ -54,4 +59,5 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	module.RoleRoute(v1, roleController, MyMiddleware)
 	module.TshirtRoute(v1, tshirtController, MyMiddleware)
 	module.OrderRoute(v1, orderController, MyMiddleware)
+	module.CartRoute(v1, cartController, MyMiddleware)
 }
