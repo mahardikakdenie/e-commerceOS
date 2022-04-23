@@ -1,8 +1,8 @@
-package orders
+package order
 
 import (
 	"api/entity"
-	"api/middleware"
+	// "api/middleware"
 )
 
 type Service interface {
@@ -31,7 +31,7 @@ func (service *service) FindById(id int) (entity.Order, error) {
 func (s *service) Created(request OrderRequest) (entity.Order, error) {
 	var order entity.Order
 	order = entity.Order{
-		UserID:   uint(middleware.UserId),
+		// UserID:   uint(middleware.UserId),
 		TShirtID: request.TShirtID,
 		Quantity: request.Quantity,
 		Status:   request.Status,
@@ -46,7 +46,7 @@ func (s *service) Updated(id int, request OrderRequest) (entity.Order, error) {
 	if err != nil {
 	}
 	order = entity.Order{
-		UserID:   uint(middleware.UserId),
+		// UserID:   uint(middleware.UserId),
 		TShirtID: request.TShirtID,
 		Quantity: request.Quantity,
 		Status:   request.Status,
