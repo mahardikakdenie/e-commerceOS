@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-xl navbar-light bg-grey">
+  <nav class="navbar navbar-expand-lg navbar-light bg-grey">
     <div class="container">
       <h3 class="text-black cursor-pointer text--brand font-bold" href="#">
         E-Commerce
@@ -15,16 +15,13 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="collapse navbar-collapse navbar--content"
-        id="navbarSupportedContent"
-      >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="ms-auto navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Dashboard</a>
+            <a class="nav-link" href="#">How To Buy</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Chart</a>
@@ -36,7 +33,6 @@
           </li>
         </ul>
       </div>
-      <div></div>
     </div>
   </nav>
 </template>

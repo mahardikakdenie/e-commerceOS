@@ -1,11 +1,22 @@
 <template>
   <!-- <div class="home"> -->
-  <router-view></router-view>
+  <div>
+    <Navbar />
+    <router-view></router-view>
+    <Footer />
+  </div>
   <!-- </div> -->
 </template>
 
 <script>
-export default {};
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/footer/Footer.vue";
+export default {
+  components: {
+    Footer,
+    Navbar,
+  },
+};
 </script>
 
 <style></style>

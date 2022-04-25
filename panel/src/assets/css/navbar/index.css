@@ -1,0 +1,13 @@
+.navbar {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.bg-grey {
+    background-color: #A0A0A0;
+}
+
+.text--brand {
+    font-weight: bold;
+    cursor: pointer;
+}
