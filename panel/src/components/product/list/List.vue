@@ -42,6 +42,9 @@
         </div>
       </div>
     </div>
+    <div class="button--loadmore">
+      <button class="btn btn-secondary btn-lg">More</button>
+    </div>
   </div>
 </template>
 
