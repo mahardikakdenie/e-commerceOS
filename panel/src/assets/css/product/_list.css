@@ -36,6 +36,15 @@
     margin: 30px 0 0 20px;
 }
 
+.product--list .button--loadmore {
+    padding: 20px 20px;   
+}
+
+.product--list .button--loadmore button {
+    width: 230px;
+    /* height: 23px; */
+}
+
 @media screen and (min-width: 40px) {
     .product--list .card {
         width: 100%;
