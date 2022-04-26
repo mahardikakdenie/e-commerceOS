@@ -7,7 +7,8 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "",
+    redirect: "/",
     name: "Dashboard",
     component: () => import("../views/Index.vue"),
     children: [
@@ -15,6 +16,11 @@ const routes = [
         path: "/",
         name: "About",
         component: Home,
+      },
+      {
+        path: "/shopping-page",
+        name: "Shooping",
+        component: () => import("../views/ShoopingPage.vue"),
       },
     ],
   },

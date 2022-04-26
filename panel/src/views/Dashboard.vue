@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <Product />
-    <List />
+    <List :list="dataClothes" title="Clothes" />
     <Slider />
-    <List />
+    <List :list="dataBucket" title="Bouquet" />
   </div>
 </template>
 
@@ -22,5 +22,23 @@ export default {
     Slider,
     List,
   },
+  data: () => ({
+    dataClothes: [
+      {
+        url: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      },
+    ],
+    dataBucket: [
+      {
+        url: "https://images.unsplash.com/photo-1572454591674-2739f30d8c40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zmxvd2VyJTIwYm91cXVldHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1565695951564-007d8f297e48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zmxvd2VyJTIwYm91cXVldHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      },
+    ],
+  }),
 };
 </script>

@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-grey">
     <div class="container">
       <h3 class="text-black cursor-pointer text--brand font-bold" href="#">
-        E-Commerce
+        Himatif
       </h3>
       <button
         class="navbar-toggler"
