@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="footer-dark">
+    <div class="footer">
       <footer>
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-md-3 item">
-              <h1 class="text-left">Himatif Store</h1>
-              <ul>
+              <h2 class="text-left">Himatif Store</h2>
+              <ul class="">
                 <li>
                   <a href="#"
                     >“My new website attracted a lot of attention in the best
@@ -19,27 +19,66 @@
               </ul>
             </div>
             <div class="col-sm-6 col-md-3 item">
-              <h3>About</h3>
-              <ul>
-                <li><a href="#">Company</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Careers</a></li>
+              <h2 class="text-left">Social Media</h2>
+              <ul class="__list">
+                <li>
+                  <a href="#"
+                    ><img
+                      style="margin-right: 8px"
+                      :src="ig"
+                      alt=""
+                    />@himatif_store</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><img
+                      class="mr-2"
+                      style="margin-right: 8px"
+                      :src="tw"
+                      alt=""
+                    />@himatif_store</a
+                  >
+                </li>
               </ul>
             </div>
-            <div class="col-md-6 item text">
-              <h3>Company Name</h3>
-              <p>
-                Praesent sed lobortis mi. Suspendisse vel placerat ligula.
-                Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
-                tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
-                in justo.
-              </p>
+            <div class="col-sm-6 col-md-3 item">
+              <h2 class="text-left">Payment Method</h2>
+              <ul class="__list">
+                <li>
+                  <a href="#"
+                    ><img
+                      style="margin-right: 8px"
+                      :src="paypal"
+                      alt=""
+                    />Paypal</a
+                  >
+                </li>
+              </ul>
             </div>
-            <div class="col item social">
-              <a href="#"><i class="icon ion-social-facebook"></i></a
-              ><a href="#"><i class="icon ion-social-twitter"></i></a
-              ><a href="#"><i class="icon ion-social-snapchat"></i></a
-              ><a href="#"><i class="icon ion-social-instagram"></i></a>
+            <div class="col-sm-6 col-md-3 item">
+              <h2 class="text-left">Contact</h2>
+              <ul class="__list">
+                <li>
+                  <a href="#"
+                    ><img
+                      style="margin-right: 8px"
+                      :src="telp"
+                      alt=""
+                    />089621174934</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><img
+                      class="mr-2"
+                      style="margin-right: 8px"
+                      :src="wa"
+                      alt=""
+                    />089621174934</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
           <p class="copyright">Company Name © 2018</p>
@@ -50,7 +89,20 @@
 </template>
 
 <script>
-export default {};
+import ig from "../../assets/images/ig.png";
+import paypal from "../../assets/images/paypal.png";
+import tw from "../../assets/images/tw.png";
+import telp from "../../assets/images/telp.png";
+import wa from "../../assets/images/wa.png";
+export default {
+  data: () => ({
+    ig: ig,
+    tw: tw,
+    paypal: paypal,
+    telp: telp,
+    wa: wa,
+  }),
+};
 </script>
 
 <style></style>

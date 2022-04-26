@@ -1,0 +1,35 @@
+.list-product {
+    padding: 20px;
+}
+
+.list-product .card {
+    padding: 20px;
+}
+
+.list-product .card .card-price {
+    display: flex;
+    justify-content: start;
+}
+
+.list-product .card .card-price .text-price {
+    font-weight: bold;
+    color: #e7ab3c;
+}
+
+.list-product .card .card-action .btn--list-product {
+    display: inline-block;
+    width: 100%;
+    background-color: #e7ab3c;
+    color: #ffff;
+}
+
+@media screen and (max-width:400px) {
+    .list-product .hero-items-dekstop {
+        display: none;
+    }
+}
+@media screen and (min-width:400px) {
+    .list-product .hero-items-mobile {
+        display: none;
+    }
+}

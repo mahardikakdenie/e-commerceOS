@@ -34,32 +34,30 @@
             <h3 class="font-bold">Rp.20000</h3>
           </div>
           <div class="action--brand">
-            <button class="btn action--brand__buy btn-secondary">Buy</button>
-            <button class="btn btn-secondary action--brand__add--cart">
-              Add To Cart
-            </button>
+            <button class="btn action--brand__buy">Buy</button>
+            <button class="btn action--brand__add--cart">Add To Cart</button>
           </div>
         </div>
       </div>
     </div>
     <div class="button--loadmore">
-      <button class="btn btn-secondary btn-lg">More</button>
+      <button class="btn primary-btn btn-lg">More {{ title }}</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    list: [
-      {
-        url: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-      },
-      {
-        url: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-      },
-    ],
-  }),
+  props: {
+    list: {
+      type: Array,
+      default: null,
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+  },
 };
 </script>
 

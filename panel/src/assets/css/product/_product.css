@@ -17,7 +17,12 @@
 .product .product__banner .btn--product {
     width: 221px;
     margin-top: 1rem;
-    background-color: #E5E5E5;
+    background-color: #e7ab3c;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 30px;
 }
 
 .product .product__banner .paragrap--product {
