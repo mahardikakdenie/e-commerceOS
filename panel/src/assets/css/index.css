@@ -2,3 +2,9 @@
 @import url(product/index.css);
 @import url(footer/index.css);
 @import url(utils/index.css);
+@import url(discount/index.css);
+@import url(list_product/list_product.css);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Pacifico&display=swap');
+#app {
+    font-family: 'Inter', sans-serif;
+}
