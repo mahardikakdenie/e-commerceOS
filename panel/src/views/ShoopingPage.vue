@@ -4,7 +4,8 @@
     <Discount />
     <ListProduct title="T-Shirt" :is_view="true" />
     <ListProduct title="Bouqet" :is_view="true" />
-    <ListProductAll title="Products" :is_view="true" />
+    <ListProductAll title="Products T-shirt" :is_view="true" />
+    <ListProductAll title="Products Bouquet" :is_view="true" />
   </div>
 </template>
 
