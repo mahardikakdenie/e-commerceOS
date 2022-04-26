@@ -4,11 +4,11 @@ import router from "./router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "./assets/css/index.css";
-// import store from './store'
+// import store from "./store";
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
   // store,
+  router,
   render: (h) => h(App),
 }).$mount("#app");
