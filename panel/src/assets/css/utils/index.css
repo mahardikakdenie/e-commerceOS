@@ -35,6 +35,82 @@
 /* Template default CSS
 /*----------------------------------------*/
 
+html,
+body {
+    height: 100%;
+    font-family: "Muli", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* font-smoothing: antialiased; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    color: #111111;
+    font-weight: 400;
+    font-family: "Muli", sans-serif;
+}
+
+/* h1 {
+    font-size: 70px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 30px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 16px;
+} */
+
+p {
+    font-size: 16px;
+    font-family: "Muli", sans-serif;
+    color: #636363;
+    font-weight: 400;
+    line-height: 26px;
+    margin: 0 0 15px 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+input:focus,
+select:focus,
+button:focus,
+textarea:focus {
+    outline: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+}
+
+ul,
+ol {
+    padding: 0;
+    margin: 0;
+}
 
 
 /*---------------------
@@ -195,6 +271,9 @@
     }
 }
 
+a {
+    text-decoration: none;
+}
 
 /*---------------------
   Header
@@ -579,13 +658,7 @@
     font-weight: 700;
     color: #252525;
 }
-/* 
-.nav-item {
-    background: #252525;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-} */
+
 
 .nav-item .nav-depart {
     float: left;
@@ -751,7 +824,6 @@
 .hero-items .single-hero-items {
     height: 725px;
     padding-top: 210px;
-    padding-bottom: 100px;
 }
 
 .hero-items .single-hero-items span {
@@ -2056,6 +2128,10 @@
     top: 0;
     border: 1px solid #e7ab3c;
     z-index: 1;
+}
+
+.ps-slider {
+    overflow: hidden;
 }
 
 .ps-slider .owl-nav button[type=button] {
