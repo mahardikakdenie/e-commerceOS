@@ -8,7 +8,7 @@
 
 .list-product .card .card-price {
     display: flex;
-    justify-content: start;
+    justify-items: start;
 }
 
 .list-product .card .card-price .text-price {

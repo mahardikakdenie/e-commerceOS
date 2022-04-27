@@ -1,0 +1,35 @@
+.show--product{ 
+    padding: 40px 0 90px 0;
+}
+
+.show--product .card--show {
+    padding: 20px;
+    height: 540px;
+}
+
+.btn-group-show button {
+    padding: 20px 70px 20px 20px;
+    margin: 0 4px 0 4px;
+}
+
+.flex-action {
+    padding: 20px;
+    display: flex;
+}
+
+.flex-action .grouping--btn {
+    border: 2px solid grey;    
+}
+.flex-action .btn-plus {
+    display: inline-block;
+    width: 58px;
+}
+.flex-action .btn-value {
+    display: inline-block;
+    width: 58px;
+}
+.flex-action .btn-minus {
+    display: inline-block;
+    width: 58px;
+    margin: 0 7px 0 0;
+}

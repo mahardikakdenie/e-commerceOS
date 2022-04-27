@@ -13,7 +13,7 @@
           <div class="col-lg-5">
             <div class="p-3 text-end">
               <div class="text--product title--product-sm">
-                Himatif Store Website
+                {{ title }}
               </div>
               <p class="paragrap--product my-6 title--product-sm">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -35,6 +35,12 @@ import carousel from "vue-owl-carousel";
 export default {
   components: {
     carousel,
+  },
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
   },
 };
 </script>

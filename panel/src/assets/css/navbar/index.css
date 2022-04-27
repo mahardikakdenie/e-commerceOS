@@ -3,6 +3,16 @@
     padding-bottom: 1.5rem;
 }
 
+.navbar .active {
+    border-bottom: 2px solid #e7ab3c;
+    color: #fff !important;
+}
+
+.navbar .nav-link:hover{
+    /* border-bottom: 2px solid #e7ab3c; */
+    color: #fff !important; 
+}
+
 .bg-grey {
     background-color: #A0A0A0;
 }
@@ -10,4 +20,23 @@
 .text--brand {
     font-weight: bold;
     cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+    .navbar .active {
+        margin: 6px 0 0 0;
+        border-radius: 7px;
+        background-color: #e7ab3c;
+        color: #fff !important;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        -ms-border-radius: 7px;
+        -o-border-radius: 7px;
+    }
+    .navbar .icon--cart {
+        margin: 10px 0 !important;
+    }
+}   
+.navbar .icon--cart {
+    margin: 4px 0 0 20px;
 }

@@ -47,10 +47,25 @@
     margin: 0 0 0 15px;
 }
 
+.discount .card .card-price--current {
+    display: flex;
+    justify-items: start;
+    margin: 0 0 0 15px;
+}
+
 .discount .card .card-price .text-price {
     font-size: 15px;
     font-weight: bold;  
     color: #e7ab3c; 
+    text-decoration: line-through red;
+}
+
+.discount .card .card-price .text-current-price {
+    font-size: 15px;
+    display: inline-block;
+    font-weight: bold;  
+    color: #e7ab3c; 
+    margin: 4px 3px 0 0px;
 }
 
 .discount .card .card-action .btn--cart {

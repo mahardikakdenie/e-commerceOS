@@ -1,0 +1,22 @@
+.contact {
+    padding: 20px 0 250px 10px;
+}
+
+.contact .contact--map {
+    padding: 20px 0;
+}
+
+.contact .contact--address {
+    display: flex;
+    justify-items: start;
+}
+
+.contact .text--address {
+    text-align: justify;
+}
+
+@media screen and (max-width: 400px) {
+    .contact {
+        padding: 20px 0 20px 10px;
+    }   
+}
