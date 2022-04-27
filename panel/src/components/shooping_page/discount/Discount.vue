@@ -21,8 +21,10 @@
               <h3 class="card-title">Title Product</h3>
             </div>
             <div class="card-price">
+              <p class="ml-2 text-current-price">Rp.20000</p>
               <p class="text-price">Rp.200000</p>
             </div>
+
             <div class="card-action">
               <button class="btn btn--cart">Add To Cart</button>
             </div>
@@ -51,13 +53,11 @@
               <div class="card-body d-flex justify-content-start">
                 <h3 class="card-title">Title Product</h3>
               </div>
-              <div class="card-start">
-                <img :src="require('../../../assets/images/star.png')" alt="" />
-                <span class="text">4.5</span>
-              </div>
               <div class="card-price">
+                <p class="ml-2 text-current-price">Rp.20000</p>
                 <p class="text-price">Rp.200000</p>
               </div>
+
               <div class="card-action">
                 <button class="btn btn--cart">Add To Cart</button>
               </div>

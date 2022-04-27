@@ -4,6 +4,8 @@
 @import url(utils/index.css);
 @import url(discount/index.css);
 @import url(list_product/list_product.css);
+@import url(contact/index.css);
+@import url(show_product/index.css);
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Pacifico&display=swap');
 #app {
     font-family: 'Inter', sans-serif;
