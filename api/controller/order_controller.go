@@ -24,7 +24,8 @@ func (c *OrderController) Index(ctx *gin.Context) {
 	page, _ := strconv.Atoi(page_string)
 	page_size_string := ctx.Query("per_page")
 	per_page, _ := strconv.Atoi(page_size_string)
-	tshirts, err := c.service.FindAll(q, page, per_page)
+	entities := ctx.Query("entities")
+	tshirts, err := c.service.FindAll(q, page, per_page, entities)
 	if err != nil {
 		helper.Exception(ctx, false, err.Error(), nil)
 		return
@@ -39,6 +40,8 @@ func (c *OrderController) Index(ctx *gin.Context) {
 			Quantity: int(v.Quantity),
 			Status:   v.Status,
 			Address:  v.Address,
+			User:     v.User,
+			TShirt:   v.TShirt,
 		})
 	}
 

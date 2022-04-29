@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	FindAll(q string, page int, par_page int) ([]entity.Order, error)
+	FindAll(q string, page int, par_page int, rntities string) ([]entity.Order, error)
 	FindById(id int) (entity.Order, error)
 	Created(order entity.Order) (entity.Order, error)
 	Updated(order entity.Order) (entity.Order, error)
@@ -22,9 +22,9 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll(q string, page int, par_page int) ([]entity.Order, error) {
+func (r *repository) FindAll(q string, page int, par_page int, entities string) ([]entity.Order, error) {
 	var order []entity.Order
-	err := r.db.Preload("User").Preload("TShirt").Scopes(models.Paginate(page, par_page), models.Search(q)).Find(&order).Error
+	err := r.db.Scopes(models.Paginate(page, par_page), models.Search(q), models.Entities(entities)).Find(&order).Error
 	return order, err
 }
 
