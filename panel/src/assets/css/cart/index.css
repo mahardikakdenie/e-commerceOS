@@ -1,0 +1,85 @@
+.cart {
+    padding: 50px;
+}
+
+.cart .card {
+    width: 100%; 
+    height: 200px
+}
+
+.cart .controll--img {
+    height: 200px;
+    width: 200px;
+    padding: 15px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.cart .card-title {
+    text-align: start;
+    text-shadow: 5px 5px 10px #e7ab3c;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19.36px;
+    font-style: normal;
+    transition: 3s;
+    -webkit-transition: 3s;
+    -moz-transition: 3s;
+    -ms-transition: 3s;
+    -o-transition: 3s;
+}
+
+.card .card-title:hover {
+    color: #e7ab3c;
+    cursor: pointer;
+    transform: scaleZ(.9);
+    -webkit-transform: scaleZ(.9);
+    -moz-transform: scaleZ(.9);
+    -ms-transform: scaleZ(.9);
+    -o-transform: scaleZ(.9);
+}
+
+.cart .form-select {
+    width: 20%;
+    margin: 16px 0 0 0;
+}
+
+.cart .card--info-action {
+    display: flex;
+    padding: 10px 0 0 10px;
+}
+
+.cart .card--info-action p {
+    margin: 0 0 0 10px;
+    font-size: 16px;
+    line-height: 19.36px;
+    font-style: normal;
+    font-weight: bold;
+    color: #e7ab3c;
+}
+
+.cart .action--cart {
+    padding: 20px;
+}
+
+.cart .action--cart .btn-- {
+    /* width: 100%; */
+    height: 50px;
+    background-color: #e7ab3c;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 0;
+    margin: 0 10px 0 0;
+}
+
+@media screen and (max-width: 400px) {
+    .cart .card {
+        width: 100%;
+        height: 100%;
+    }
+}

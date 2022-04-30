@@ -26,8 +26,13 @@
               >{{ item.text }}</router-link
             >
           </li>
-          <li class="icon--cart">
+          <li
+            :class="`nav-item ${
+              $route.path === '/cart' ? 'active' : ''
+            } icon--cart cursor-pointer`"
+          >
             <svg
+              @click="$router.push('/cart')"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -45,9 +50,7 @@
           </li>
 
           <li class="nav-item">
-            <button class="btn btn-secondary btn--login--width" type="submit">
-              login
-            </button>
+            <button class="btn btn--login--width" type="submit">login</button>
           </li>
         </ul>
       </div>

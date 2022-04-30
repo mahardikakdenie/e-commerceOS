@@ -33,12 +33,13 @@
 
 .btn--login--width{
     width: 100%;
-    border-radius: 9px;
-    background-color: #C4C4C4;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    -ms-border-radius: 9px;
-    -o-border-radius: 9px;
+    border-radius: 4px;
+    background-color: #e7ab3c;
+    color: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
 }
 
 @media screen and (min-width: 500px) {
