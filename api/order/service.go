@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	FindAll(q string, page int, par_page int) ([]entity.Order, error)
+	FindAll(q string, page int, par_page int, entities string) ([]entity.Order, error)
 	FindById(id int) (entity.Order, error)
 	Created(order OrderRequest) (entity.Order, error)
 	Updated(id int, request OrderRequest) (entity.Order, error)
@@ -20,8 +20,8 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (service *service) FindAll(q string, page int, par_page int) ([]entity.Order, error) {
-	return service.repository.FindAll(q, page, par_page)
+func (service *service) FindAll(q string, page int, par_page int, entities string) ([]entity.Order, error) {
+	return service.repository.FindAll(q, page, par_page, entities)
 }
 
 func (service *service) FindById(id int) (entity.Order, error) {

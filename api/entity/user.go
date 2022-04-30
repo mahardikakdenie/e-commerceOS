@@ -12,4 +12,6 @@ type User struct {
 	RoleId   uint `gorm:"foreignkey:RoleID"`
 	Role     Role `json:"role"`
 	Auth     []Auth
+	StoreId  *uint `gorm:"foreignkey:StoreID:constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
+	Store    Store `grom:"foreignKey:StoreID:constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
