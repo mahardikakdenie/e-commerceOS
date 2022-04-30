@@ -19,7 +19,10 @@
       <div class="col-lg-6">
         <div class="__brand">
           <div class="title--brand">
-            <h1>Title Baju</h1>
+            <h1 class="--brand" @click="$router.push(`/product/${i + 1}`)">
+              Kacamata Photocromic Korea 2 In 1 Kacamata Lensa Photocromic Anti
+              Uv Wanita Dan Pria
+            </h1>
           </div>
           <div class="paragrap--brand">
             <p>
@@ -41,7 +44,12 @@
       </div>
     </div>
     <div class="button--loadmore">
-      <button class="btn primary-btn btn-lg">More {{ title }}</button>
+      <button
+        class="btn primary-btn btn-lg"
+        @click="$router.push('/shopping-page')"
+      >
+        More {{ title }}
+      </button>
     </div>
   </div>
 </template>
@@ -58,7 +66,21 @@ export default {
       default: "",
     },
   },
+  methods: {},
 };
 </script>
 
-<style></style>
+<style scoped>
+.--brand {
+  text-shadow: 5px 5px 10px #e7ab3c;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 1s;
+}
+.--brand:hover {
+  color: #e7ab3c;
+  font-weight: bold;
+  cursor: pointer;
+  transform: scale(0.9);
+}
+</style>
