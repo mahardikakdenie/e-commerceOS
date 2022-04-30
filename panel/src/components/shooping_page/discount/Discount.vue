@@ -46,6 +46,7 @@
           >
             <div class="card card--mobile">
               <img
+                @click="$router.push(`/product/${i}`)"
                 src="https://images.unsplash.com/photo-1572454591674-2739f30d8c40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zmxvd2VyJTIwYm91cXVldHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
                 class="img--product"
                 alt="..."
