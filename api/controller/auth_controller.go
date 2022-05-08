@@ -62,7 +62,7 @@ func (controller *AuthController) Login(ctx *gin.Context) {
 	authToken := base64.URLEncoding.EncodeToString(randomToken)
 
 	token_request = auth.AuthRequest{
-		UserId:    int(user.ID),
+		UserId:    uint(user.ID),
 		AuthToken: authToken,
 	}
 

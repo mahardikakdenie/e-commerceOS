@@ -7,5 +7,5 @@ type TshirtRequest struct {
 	Price       int    `json:"price"`
 	Stock       int    `json:"stock"`
 	Image       string `json:"url_image"`
-	UserId      int    `json:"user_id"`
+	UserId      uint   `json:"user_id"`
 }

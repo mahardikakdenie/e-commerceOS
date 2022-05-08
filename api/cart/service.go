@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	FindAll() ([]entity.Cart, error)
+	FindAll(entities string) ([]entity.Cart, error)
 	Created(request CartRequest) (entity.Cart, error)
 	FindById(id int) (entity.Cart, error)
 	Deleted(id int) (entity.Cart, error)
@@ -20,15 +20,15 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (service *service) FindAll() ([]entity.Cart, error) {
-	return service.repository.FindAll()
+func (service *service) FindAll(entities string) ([]entity.Cart, error) {
+	return service.repository.FindAll(entities)
 }
 
 func (service *service) Created(request CartRequest) (entity.Cart, error) {
 	var cart entity.Cart
 	cart = entity.Cart{
 		UserID:   uint(middleware.UserId),
-		TShirtID: request.TShirtID,
+		TShirtID: uint(request.TShirtID),
 		Quantity: request.Quantity,
 		Status:   "pending",
 	}

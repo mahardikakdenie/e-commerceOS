@@ -20,7 +20,8 @@ func NewCartController(service cart.Service) *CartController {
 func (c *CartController) Index(ctx *gin.Context) {
 	page, _ := strconv.Atoi(ctx.Query("page"))
 	per_page, _ := strconv.Atoi(ctx.Query("per_page"))
-	data, err := c.service.FindAll()
+	entities := ctx.Query("entities")
+	data, err := c.service.FindAll(entities)
 	if err != nil {
 		helper.Exception(ctx, false, "Cart not found", nil)
 		return
@@ -30,10 +31,12 @@ func (c *CartController) Index(ctx *gin.Context) {
 	for _, v := range data {
 		cartResponses = append(cartResponses, cart.CartResponses{
 			ID:       int(v.ID),
-			UserId:   int(v.UserID),
+			UserId:   uint(v.UserID),
 			TShirtId: int(v.TShirtID),
 			Qty:      int(v.Quantity),
 			Status:   v.Status,
+			User:     v.User,
+			TShirt:   v.TShirt,
 		})
 	}
 
@@ -51,7 +54,7 @@ func (c *CartController) Show(ctx *gin.Context) {
 	var cartResponses cart.CartResponses
 	cartResponses = cart.CartResponses{
 		ID:       int(data.ID),
-		UserId:   int(data.UserID),
+		UserId:   uint(data.UserID),
 		TShirtId: int(data.TShirtID),
 		Qty:      int(data.Quantity),
 		Status:   data.Status,
