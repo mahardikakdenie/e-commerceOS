@@ -2,12 +2,13 @@ package cart
 
 import (
 	"api/entity"
+	"api/models"
 
 	"gorm.io/gorm"
 )
 
 type Repository interface {
-	FindAll() ([]entity.Cart, error)
+	FindAll(entities string) ([]entity.Cart, error)
 	Created(entity.Cart) (entity.Cart, error)
 	Updated(entity.Cart) (entity.Cart, error)
 	FindById(id int) (entity.Cart, error)
@@ -21,9 +22,9 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll() ([]entity.Cart, error) {
+func (r *repository) FindAll(entities string) ([]entity.Cart, error) {
 	var cart []entity.Cart
-	err := r.db.Find(&cart).Error
+	err := r.db.Scopes(models.Entities(entities)).Find(&cart).Error
 	return cart, err
 }
 

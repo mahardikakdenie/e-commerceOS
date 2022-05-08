@@ -9,7 +9,7 @@ import (
 type Repository interface {
 	FindAll() ([]entity.User, error)
 	FindByEmail(email string) (entity.User, error)
-	Me(user_id int) (entity.User, error)
+	Me(user_id uint) (entity.User, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -31,7 +31,7 @@ func (r *repository) FindByEmail(email string) (entity.User, error) {
 	return user, err
 }
 
-func (r *repository) Me(user_id int) (entity.User, error) {
+func (r *repository) Me(user_id uint) (entity.User, error) {
 	var user entity.User
 	err := r.db.Preload("Role").Where("id = ?", user_id).Find(&user).Error
 	return user, err
