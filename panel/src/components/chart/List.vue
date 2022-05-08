@@ -2,11 +2,11 @@
   <div class="container cart">
     <!-- <div class="row">
       <div class="col"> -->
-    <div class="card mb-3" v-for="i in 6" :key="i" style="">
+    <div class="card mb-3" v-for="(v, i) in list" :key="i" style="">
       <div class="row g-0">
         <div class="col-md-2">
           <img
-            src="https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            :src="v.image"
             class="img-fluid rounded-start controll--img"
             alt="..."
           />
@@ -14,11 +14,14 @@
         <div class="col-md-10">
           <div class="card-body">
             <h4 class="card-title">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Voluptas, sit!
+              {{ v.title }}
             </h4>
             <div>
-              <select class="form-select" aria-label="Default select example">
+              <select
+                v-model="v.variant"
+                class="form-select"
+                aria-label="Default select example"
+              >
                 <option selected>Variant</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -28,12 +31,12 @@
             <div class="card--info-action">
               <div class="card--info-action-price">
                 <p class="ml-2 text-current-price">
-                  Rp.20000, x 20 || Rp.400000
+                  {{ v.price }}, x {{ v.mount }} || Rp.{{ totalPrice(i) }}
                 </p>
               </div>
             </div>
             <div class="d-flex action--cart">
-              <button class="btn btn-primary btn--">
+              <button @click="methodPlus(i)" class="btn btn-primary btn--">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -50,7 +53,7 @@
                   />
                 </svg>
               </button>
-              <button class="btn btn-primary btn--">
+              <button @click="minusMethod(i)" class="btn btn-primary btn--">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -68,7 +71,7 @@
                   />
                 </svg>
               </button>
-              <button class="btn btn-danger">
+              <button @click="deleteMethod(i)" class="btn btn-danger">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -97,7 +100,67 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    mount_price: 0,
+    mount: 3,
+    list: [
+      {
+        title: "Jersey RRQ HOSHI",
+        variant: "1",
+        price: 120000,
+        mount: 1,
+        image:
+          "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/1/25/c2288826-35d6-4184-9555-61c4e20343c3.jpg.webp?ect=4g",
+      },
+      {
+        title: "Jersey Evos",
+        variant: "1",
+        price: 40000,
+        mount: 1,
+        image:
+          "https://images.tokopedia.net/img/cache/700/VqbcmM/2022/3/19/8ec93675-0a8a-4a26-aa83-4faf58b650d2.jpg.webp?ect=4g",
+      },
+      {
+        title: "Jersey Onic",
+        variant: "1",
+        price: 60000,
+        mount: 1,
+        image:
+          "https://images.tokopedia.net/img/cache/700/product-1/2021/4/17/942954/942954_fddd31ae-eba1-48b7-94cc-8af55c102164.jpg.webp?ect=4g",
+      },
+    ],
+  }),
+  computed: {
+    summaryPrice(i) {
+      let price = 0;
+      price = this.list[i].price * this.list[i].mount;
+
+      return price;
+    },
+  },
+  methods: {
+    methodPlus(i) {
+      this.list[i].mount++;
+    },
+    minusMethod(i) {
+      if (this.list[i].mount <= 1) {
+        this.deleteMethod(i);
+        return;
+      }
+      this.list[i].mount--;
+    },
+    deleteMethod(index) {
+      console.log(index);
+      this.list.splice(index, 1);
+    },
+    totalPrice(i) {
+      let price = 0;
+      price = this.list[i].price * this.list[i].mount;
+      return price;
+    },
+  },
+};
 </script>
 
 <style></style>

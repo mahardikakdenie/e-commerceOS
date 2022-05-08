@@ -47,3 +47,14 @@ func CheckAddress(address string, data entity.Order) string {
 
 	return address
 }
+
+func CheckCustomerForeignKey(customer_id *uint, data entity.Order) *uint {
+	if customer_id != nil {
+		data.CustomerID = customer_id
+		customer_id = data.CustomerID
+	} else {
+		customer_id = nil
+	}
+
+	return customer_id
+}

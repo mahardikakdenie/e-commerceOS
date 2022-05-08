@@ -35,7 +35,7 @@ func (c *OrderController) Index(ctx *gin.Context) {
 	for _, v := range tshirts {
 		orderResponses = append(orderResponses, orders.OrderResponse{
 			ID:       uint(v.ID),
-			UserID:   uint(v.UserID),
+			UserID:   &v.User.ID,
 			TShirtID: uint(v.TShirtID),
 			Quantity: int(v.Quantity),
 			Status:   v.Status,
@@ -55,7 +55,7 @@ func (c *OrderController) Show(ctx *gin.Context) {
 	var orderResponse orders.OrderResponse
 	orderResponse = orders.OrderResponse{
 		ID:       uint(data.ID),
-		UserID:   uint(data.UserID),
+		UserID:   data.UserID,
 		TShirtID: uint(data.TShirtID),
 		Quantity: int(data.Quantity),
 		Status:   data.Status,
@@ -75,14 +75,17 @@ func (c *OrderController) Store(ctx *gin.Context) {
 	tshirt_id_string := ctx.PostForm("tshirt_id")
 	tshirt_id, _ := strconv.Atoi(tshirt_id_string)
 	quantity, _ := strconv.Atoi(ctx.PostForm("quantity"))
+	customer_id, _ := strconv.Atoi(ctx.PostForm("customer_id"))
 
 	request = orders.OrderRequest{
-		UserID:   uint(middleware.UserId),
-		Status:   "pending",
-		TShirtID: uint(tshirt_id),
-		Address:  ctx.PostForm("address"),
-		Quantity: quantity,
+		UserID:     uint(middleware.UserId),
+		Status:     "pending",
+		TShirtID:   uint(tshirt_id),
+		Address:    ctx.PostForm("address"),
+		Quantity:   quantity,
+		CustomerID: uint(customer_id),
 	}
+
 	data, err := c.service.Created(request)
 	if err != nil {
 		helper.Exception(ctx, false, err.Error(), nil)

@@ -4,6 +4,8 @@ import (
 	"api/auth"
 	"api/cart"
 	"api/controller"
+	"api/customer"
+	"api/customer_auth"
 	"api/middleware"
 	orders "api/order"
 	"api/role"
@@ -55,7 +57,18 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	storeService := store.NewService(storeRepository)
 	storeController := controller.NewStoreController(storeService)
 
+	//
+	customerRepository := customer.NewRepository(db)
+	customerService := customer.NewService(customerRepository)
+	customerController := controller.NewCustomerController(customerService)
+
+	//
+	customerAuthRepository := customer_auth.NewRepository(db)
+	customerAuthService := customer_auth.NewService(customerAuthRepository)
+	customerAuthController := controller.NewCustomerAuthController(customerAuthService)
+
 	MyMiddleware := middleware.MyMiddleware(authService)
+	CustomerMiddleware := middleware.CustomerMiddleware(customerAuthService)
 
 	v1 := router.Group("v1")
 
@@ -67,4 +80,6 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	module.OrderRoute(v1, orderController, MyMiddleware)
 	module.CartRoute(v1, cartController, MyMiddleware)
 	module.StoreRoute(v1, storeController, MyMiddleware)
+	module.CustomerRoute(v1, customerController, MyMiddleware)
+	module.CustomerAuthRoute(v1, customerAuthController, CustomerMiddleware)
 }
