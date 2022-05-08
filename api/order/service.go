@@ -2,6 +2,8 @@ package order
 
 import (
 	"api/entity"
+	"api/helper"
+	"api/middleware"
 	// "api/middleware"
 )
 
@@ -31,11 +33,12 @@ func (service *service) FindById(id int) (entity.Order, error) {
 func (s *service) Created(request OrderRequest) (entity.Order, error) {
 	var order entity.Order
 	order = entity.Order{
-		// UserID:   uint(middleware.UserId),
-		TShirtID: request.TShirtID,
-		Quantity: request.Quantity,
-		Status:   request.Status,
-		Address:  request.Address,
+		UserID:     &middleware.UserId,
+		TShirtID:   request.TShirtID,
+		Quantity:   request.Quantity,
+		Status:     request.Status,
+		Address:    request.Address,
+		CustomerID: helper.CheckCustomerForeignKey(&request.CustomerID, order),
 	}
 	orders, err := s.repository.Created(order)
 	return orders, err
@@ -46,11 +49,12 @@ func (s *service) Updated(id int, request OrderRequest) (entity.Order, error) {
 	if err != nil {
 	}
 	order = entity.Order{
-		// UserID:   uint(middleware.UserId),
-		TShirtID: request.TShirtID,
-		Quantity: request.Quantity,
-		Status:   request.Status,
-		Address:  request.Address,
+		UserID:     &middleware.UserId,
+		TShirtID:   request.TShirtID,
+		Quantity:   request.Quantity,
+		Status:     request.Status,
+		Address:    request.Address,
+		CustomerID: helper.CheckCustomerForeignKey(order.CustomerID, order),
 	}
 
 	orders, err := s.repository.Updated(order)
