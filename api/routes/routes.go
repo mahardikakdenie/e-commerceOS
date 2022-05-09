@@ -1,19 +1,21 @@
 package routes
 
 import (
-	"api/auth"
-	"api/cart"
 	"api/controller"
-	"api/customer"
-	"api/customer_auth"
 	"api/middleware"
-	orders "api/order"
-	"api/role"
+	"api/modules/auth"
+	"api/modules/cart"
+	category_store "api/modules/category/store"
+	"api/modules/customer"
+	"api/modules/customer_auth"
+	orders "api/modules/order"
+	product_store "api/modules/product/store"
+	"api/modules/role"
+	"api/modules/store"
+	"api/modules/tshirt"
 	"api/routes/module"
-	"api/store"
-	"api/tshirt"
 
-	"api/user"
+	"api/modules/user"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -43,7 +45,6 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	tshirtController := controller.NewTShirtController(tshirtService)
 
 	//
-
 	orderRepository := orders.NewRepository(db)
 	orderService := orders.NewService(orderRepository)
 	orderController := controller.NewOrderController(orderService)
@@ -67,6 +68,16 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	customerAuthService := customer_auth.NewService(customerAuthRepository)
 	customerAuthController := controller.NewCustomerAuthController(customerAuthService)
 
+	//
+	categoryStoreRepository := category_store.NewRepository(db)
+	categoryStoreService := category_store.NewService(categoryStoreRepository)
+	categoryStoreController := controller.NewCategoryStoreController(categoryStoreService)
+
+	//
+	productStoreRepository := product_store.NewRepository(db)
+	productStoreService := product_store.NewService(productStoreRepository)
+	productStoreController := controller.NewProductStoreController(productStoreService)
+
 	MyMiddleware := middleware.MyMiddleware(authService)
 	CustomerMiddleware := middleware.CustomerMiddleware(customerAuthService)
 
@@ -82,4 +93,6 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	module.StoreRoute(v1, storeController, MyMiddleware)
 	module.CustomerRoute(v1, customerController, MyMiddleware)
 	module.CustomerAuthRoute(v1, customerAuthController, CustomerMiddleware)
+	module.CategoryStoreRoute(v1, categoryStoreController, MyMiddleware)
+	module.ProductStoreRoute(v1, productStoreController, MyMiddleware)
 }

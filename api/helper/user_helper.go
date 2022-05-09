@@ -2,14 +2,14 @@ package helper
 
 import (
 	"api/entity"
-	"api/user"
+	"api/modules/user"
 )
 
-func UserResponses(v entity.User) user.UserReponse {
-	var user_responses user.UserReponse
+func UserResponses(v entity.User) user.UserResponses {
+	var user_responses user.UserResponses
 
-	user_responses = user.UserReponse{
-		ID:    int(v.ID),
+	user_responses = user.UserResponses{
+		ID:    uint(v.ID),
 		Name:  v.Name,
 		Email: v.Email,
 		Auth:  v.Auth,

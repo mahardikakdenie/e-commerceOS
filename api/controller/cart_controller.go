@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"api/cart"
 	"api/helper"
 	"api/middleware"
+	"api/modules/cart"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -30,13 +30,13 @@ func (c *CartController) Index(ctx *gin.Context) {
 	var cartResponses []cart.CartResponses
 	for _, v := range data {
 		cartResponses = append(cartResponses, cart.CartResponses{
-			ID:       int(v.ID),
-			UserId:   uint(v.UserID),
-			TShirtId: int(v.TShirtID),
-			Qty:      int(v.Quantity),
-			Status:   v.Status,
-			User:     v.User,
-			TShirt:   v.TShirt,
+			ID:     int(v.ID),
+			UserId: uint(v.UserID),
+			// TShirtId: int(v.TShirtID),
+			Qty:    int(v.Quantity),
+			Status: v.Status,
+			User:   v.User,
+			// TShirt:   v.TShirt,
 		})
 	}
 
@@ -53,11 +53,11 @@ func (c *CartController) Show(ctx *gin.Context) {
 
 	var cartResponses cart.CartResponses
 	cartResponses = cart.CartResponses{
-		ID:       int(data.ID),
-		UserId:   uint(data.UserID),
-		TShirtId: int(data.TShirtID),
-		Qty:      int(data.Quantity),
-		Status:   data.Status,
+		ID:     int(data.ID),
+		UserId: uint(data.UserID),
+		// TShirtId: int(data.TShirtID),
+		Qty:    int(data.Quantity),
+		Status: data.Status,
 	}
 
 	helper.Responses(ctx, true, "Success", cartResponses, 0, 0)
@@ -87,11 +87,11 @@ func (c *CartController) Update(ctx *gin.Context) {
 		helper.Exception(ctx, false, "Cart not found", nil)
 		return
 	}
-	tshirt_id, _ := strconv.Atoi(ctx.PostForm("tshirt_id"))
+	// tshirt_id, _ := strconv.Atoi(ctx.PostForm("tshirt_id"))
 	quantity, _ := strconv.Atoi(ctx.PostForm("quantity"))
 	var request cart.CartRequest
 	request = cart.CartRequest{
-		TShirtID: helper.CheckerCartTshirtId(uint(tshirt_id), cartId),
+		// TShirtID: helper.CheckerCartTshirtId(uint(tshirt_id), cartId),
 		UserID:   uint(middleware.UserId),
 		Quantity: helper.CheckCartQuantity(quantity, cartId),
 		Status:   helper.CheckCartStatus(ctx.PostForm("status"), cartId),
