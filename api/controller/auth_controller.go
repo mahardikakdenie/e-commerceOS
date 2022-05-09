@@ -1,9 +1,10 @@
 package controller
 
 import (
-	"api/auth"
 	"api/helper"
-	"api/user"
+	"api/modules/auth"
+	"api/modules/user"
+	users "api/modules/user"
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
@@ -104,11 +105,20 @@ func (controller *AuthController) Register(ctx *gin.Context) {
 		return
 	}
 
+	var user_responses users.UserResponses
+	user_responses = users.UserResponses{
+		ID:    uint(user.ID),
+		Name:  user.Name,
+		Email: user.Email,
+		Role:  user.Role,
+		Auth:  user.Auth,
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"meta": gin.H{
 			"status":  true,
 			"message": "User created",
 		},
-		"data": user,
+		"data": user_responses,
 	})
 }

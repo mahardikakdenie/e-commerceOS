@@ -3,7 +3,7 @@ package controller
 import (
 	"api/helper"
 	"api/middleware"
-	"api/user"
+	"api/modules/user"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,10 +24,10 @@ func (controller *UserController) FindAll(c *gin.Context) {
 		return
 	}
 
-	var userResponses []user.UserReponse
+	var userResponses []user.UserResponses
 	for _, v := range data {
-		userResponses = append(userResponses, user.UserReponse{
-			ID:    int(v.ID),
+		userResponses = append(userResponses, user.UserResponses{
+			ID:    uint(v.ID),
 			Name:  v.Name,
 			Email: v.Email,
 			Auth:  v.Auth,

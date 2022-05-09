@@ -3,7 +3,7 @@ package controller
 import (
 	"api/helper"
 	"api/middleware"
-	"api/tshirt"
+	"api/modules/tshirt"
 
 	"strconv"
 

@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"api/customer"
 	"api/entity"
 	"api/helper"
+	"api/modules/customer"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

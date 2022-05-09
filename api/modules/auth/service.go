@@ -2,7 +2,7 @@ package auth
 
 import (
 	"api/entity"
-	"api/user"
+	"api/modules/user"
 )
 
 type Service interface {

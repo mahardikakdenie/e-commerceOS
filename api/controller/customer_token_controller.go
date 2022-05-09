@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"api/customer_auth"
 	"api/helper"
+	"api/modules/customer_auth"
 	"crypto/rand"
 	"encoding/base64"
 

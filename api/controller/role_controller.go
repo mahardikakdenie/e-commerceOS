@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"api/role"
+	"api/modules/role"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
