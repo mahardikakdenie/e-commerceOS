@@ -4,16 +4,16 @@ import (
 	"api/entity"
 )
 
-func CheckerTshirtId(tshirt_id uint, data entity.Order) uint {
-	if tshirt_id != 0 {
-		data.TShirtID = tshirt_id
-	} else {
-		tshirt_id = data.TShirtID
-		data.TShirtID = tshirt_id
-	}
+// func CheckerTshirtId(tshirt_id *uint, data entity.Order) *uint {
+// 	if tshirt_id != nil {
+// 		data.TShirtID = tshirt_id
+// 	} else {
+// 		tshirt_id = data.TShirtID
+// 		data.TShirtID = tshirt_id
+// 	}
 
-	return tshirt_id
-}
+// 	return tshirt_id
+// }
 
 func CheckStatus(status string, data entity.Order) string {
 	if status != "" {

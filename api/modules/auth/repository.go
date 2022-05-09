@@ -41,6 +41,6 @@ func (r *repository) FindByEmail(email string) (entity.User, error) {
 
 func (r *repository) FindByToken(token string) (entity.Auth, error) {
 	var auth entity.Auth
-	err := r.db.Where("auth_token = ?", token).Find(&auth).Error
+	err := r.db.Preload("User").Where("auth_token = ?", token).Find(&auth).Error
 	return auth, err
 }

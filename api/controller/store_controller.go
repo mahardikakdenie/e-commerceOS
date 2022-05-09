@@ -3,7 +3,7 @@ package controller
 import (
 	"api/entity"
 	"api/helper"
-	"api/store"
+	"api/modules/store"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

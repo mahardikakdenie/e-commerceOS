@@ -4,8 +4,8 @@ import (
 	"api/entity"
 )
 
-type UserReponse struct {
-	ID    int           `json:"id"`
+type UserResponses struct {
+	ID    uint          `json:"id"`
 	Name  string        `json:"name"`
 	Email string        `json:"email"`
 	Role  entity.Role   `json:"role"`

@@ -3,8 +3,8 @@ package controller
 import (
 	"api/helper"
 	"api/middleware"
-	"api/order"
-	orders "api/order"
+	"api/modules/order"
+	orders "api/modules/order"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -34,14 +34,14 @@ func (c *OrderController) Index(ctx *gin.Context) {
 	var orderResponses []orders.OrderResponse
 	for _, v := range tshirts {
 		orderResponses = append(orderResponses, orders.OrderResponse{
-			ID:       uint(v.ID),
-			UserID:   &v.User.ID,
-			TShirtID: uint(v.TShirtID),
+			ID:     uint(v.ID),
+			UserID: &v.User.ID,
+			// TShirtID: v.TShirtID,
 			Quantity: int(v.Quantity),
 			Status:   v.Status,
 			Address:  v.Address,
 			User:     v.User,
-			TShirt:   v.TShirt,
+			// TShirt:   v.TShirt,
 		})
 	}
 
@@ -54,14 +54,14 @@ func (c *OrderController) Show(ctx *gin.Context) {
 	data, err := c.service.FindById(int(id))
 	var orderResponse orders.OrderResponse
 	orderResponse = orders.OrderResponse{
-		ID:       uint(data.ID),
-		UserID:   data.UserID,
-		TShirtID: uint(data.TShirtID),
+		ID:     uint(data.ID),
+		UserID: data.UserID,
+		// TShirtID: data.TShirtID,
 		Quantity: int(data.Quantity),
 		Status:   data.Status,
 		Address:  data.Address,
 		User:     data.User,
-		TShirt:   data.TShirt,
+		// TShirt:   data.TShirt,
 	}
 	if err != nil {
 		helper.Exception(ctx, false, err.Error(), nil)
@@ -72,15 +72,14 @@ func (c *OrderController) Show(ctx *gin.Context) {
 
 func (c *OrderController) Store(ctx *gin.Context) {
 	var request orders.OrderRequest
-	tshirt_id_string := ctx.PostForm("tshirt_id")
-	tshirt_id, _ := strconv.Atoi(tshirt_id_string)
+	// tshirt_id_string := ctx.PostForm("tshirt_id")
+	// tshirt_id, _ := strconv.Atoi(tshirt_id_string)
 	quantity, _ := strconv.Atoi(ctx.PostForm("quantity"))
 	customer_id, _ := strconv.Atoi(ctx.PostForm("customer_id"))
 
 	request = orders.OrderRequest{
 		UserID:     uint(middleware.UserId),
 		Status:     "pending",
-		TShirtID:   uint(tshirt_id),
 		Address:    ctx.PostForm("address"),
 		Quantity:   quantity,
 		CustomerID: uint(customer_id),
@@ -102,13 +101,13 @@ func (c *OrderController) Update(ctx *gin.Context) {
 		helper.Exception(ctx, false, err.Error(), nil)
 		return
 	}
-	tshirt_id, _ := strconv.Atoi(ctx.PostForm("tshirt_id"))
+	// tshirt_id, _ := strconv.Atoi(ctx.PostForm("tshirt_id"))
 	quantity, _ := strconv.Atoi(ctx.PostForm("quantity"))
 	var request order.OrderRequest
 	request = order.OrderRequest{
-		Status:   helper.CheckStatus(ctx.PostForm("status"), dataOrder),
-		Address:  helper.CheckAddress(ctx.PostForm("address"), dataOrder),
-		TShirtID: helper.CheckerTshirtId(uint(tshirt_id), dataOrder),
+		Status:  helper.CheckStatus(ctx.PostForm("status"), dataOrder),
+		Address: helper.CheckAddress(ctx.PostForm("address"), dataOrder),
+		// TShirtID: helper.CheckerTshirtId(&tshirt_id, dataOrder),
 		Quantity: helper.CheckQuantity(quantity, dataOrder),
 	}
 	data, err := c.service.Updated(id, request)

@@ -1,9 +1,11 @@
 <template>
   <div class="home">
     <Product title="Himatif Store Website" />
-    <List :list="dataClothes" title="Clothes" />
-    <Slider />
-    <List :list="dataBucket" title="Bouquet" />
+    <div v-for="i in 3" :key="i">
+      <List :list="dataClothes" title="Clothes" />
+      <Slider />
+      <List :list="dataBucket" title="Bouquet" />
+    </div>
   </div>
 </template>
 

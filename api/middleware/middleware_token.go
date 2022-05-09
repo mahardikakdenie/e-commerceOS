@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"api/auth"
-	"api/customer_auth"
 	"api/helper"
+	"api/modules/auth"
+	"api/modules/customer_auth"
 
 	"strings"
 
@@ -12,6 +12,7 @@ import (
 
 var UserId uint
 var CustomerId uint
+var StoreId *uint
 
 func MyMiddleware(service auth.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -28,6 +29,7 @@ func MyMiddleware(service auth.Service) gin.HandlerFunc {
 			return
 		}
 		UserId = token.UserId
+		StoreId = token.User.StoreId
 
 		if err != nil {
 			helper.Exception(ctx, false, "Token is incorrect", nil)
