@@ -6,7 +6,7 @@ type OrderResponse struct {
 	ID         uint          `json:"id"`
 	UserID     *uint         `json:"user_id"`
 	CustomerId *uint         `json:"customer_id"`
-	TShirtID   uint          `json:"tshirt_id"`
+	TShirtID   *uint         `json:"tshirt_id"`
 	Quantity   int           `json:"quantity"`
 	Status     string        `json:"status"`
 	Address    string        `json:"address"`

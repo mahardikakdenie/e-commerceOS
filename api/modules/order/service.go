@@ -33,8 +33,8 @@ func (service *service) FindById(id int) (entity.Order, error) {
 func (s *service) Created(request OrderRequest) (entity.Order, error) {
 	var order entity.Order
 	order = entity.Order{
-		UserID:     &middleware.UserId,
-		TShirtID:   request.TShirtID,
+		UserID: &middleware.UserId,
+		// TShirtID:   request.TShirtID,
 		Quantity:   request.Quantity,
 		Status:     request.Status,
 		Address:    request.Address,
@@ -49,8 +49,8 @@ func (s *service) Updated(id int, request OrderRequest) (entity.Order, error) {
 	if err != nil {
 	}
 	order = entity.Order{
-		UserID:     &middleware.UserId,
-		TShirtID:   request.TShirtID,
+		UserID: &middleware.UserId,
+		// TShirtID:   request.TShirtID,
 		Quantity:   request.Quantity,
 		Status:     request.Status,
 		Address:    request.Address,

@@ -54,7 +54,13 @@
           </li>
 
           <li class="nav-item">
-            <button class="btn btn--login--width" type="submit">login</button>
+            <button
+              class="btn btn--login--width"
+              @click="$router.push('/login')"
+              type="submit"
+            >
+              login
+            </button>
           </li>
         </ul>
       </div>
