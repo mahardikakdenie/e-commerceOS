@@ -42,5 +42,27 @@ export default {
       },
     ],
   }),
+  computed: {
+    computed() {
+      return this.$store.state.category.categories;
+    },
+  },
+  mounted() {
+    this.getCategories();
+  },
+  methods: {
+    getCategories() {
+      this.$store
+        .dispatch("category/getCategories", {
+          entities: "User,Store",
+          store_id: localStorage.getItem("store_id"),
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            console.log(res);
+          }
+        });
+    },
+  },
 };
 </script>

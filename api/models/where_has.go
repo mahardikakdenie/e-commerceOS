@@ -19,3 +19,12 @@ func ByStore(store_id uint) func(*gorm.DB) *gorm.DB {
 		return d
 	}
 }
+
+func ByStoreId(store_id string) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if store_id != "" {
+			d.Where("store_id = ?", store_id)
+		}
+		return d
+	}
+}

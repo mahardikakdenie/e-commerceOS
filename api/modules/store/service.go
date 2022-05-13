@@ -11,6 +11,7 @@ type Service interface {
 	FindById(id int) (entity.Store, error)
 	Update(request StoreRequest, id int) (entity.Store, error)
 	Deleted(entity.Store) (entity.Store, error)
+	FindBySlug(slug string) (entity.Store, error)
 }
 
 type service struct {
@@ -53,4 +54,8 @@ func (s *service) Update(request StoreRequest, id int) (entity.Store, error) {
 
 func (s *service) Deleted(store entity.Store) (entity.Store, error) {
 	return s.repository.Deleted(store)
+}
+
+func (s *service) FindBySlug(slug string) (entity.Store, error) {
+	return s.repository.FindBySlug(slug)
 }

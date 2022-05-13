@@ -7,10 +7,10 @@ import (
 )
 
 type Service interface {
-	FindAll(entities string) ([]entity.Product, error)
+	FindAll(entities string, store_slug string) ([]entity.Product, error)
 	Created(request ProductStoreRequest) (entity.Product, error)
 	Updated(request ProductStoreRequest, id uint) (entity.Product, error)
-	FindById(id uint) (entity.Product, error)
+	FindById(id uint, store_id string, entities string) (entity.Product, error)
 	Deleted(id uint) (entity.Product, error)
 }
 
@@ -22,17 +22,17 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (s *service) FindAll(entities string) ([]entity.Product, error) {
-	return s.repository.FindAll(entities)
+func (s *service) FindAll(entities string, store_slug string) ([]entity.Product, error) {
+	return s.repository.FindAll(entities, store_slug)
 }
 
-func (s *service) FindById(id uint) (entity.Product, error) {
-	return s.repository.FindById(id)
+func (s *service) FindById(id uint, store_id string, entities string) (entity.Product, error) {
+	return s.repository.FindById(id, store_id, entities)
 }
 
 func (s *service) Created(request ProductStoreRequest) (entity.Product, error) {
 	var product entity.Product
-	products, err := s.repository.FindAll("")
+	products, err := s.repository.FindAll("", "")
 	product = entity.Product{
 		Name:        request.Name,
 		Slug:        helper.GeneratedProductStoreSlug(request.Name, products),
@@ -49,8 +49,8 @@ func (s *service) Created(request ProductStoreRequest) (entity.Product, error) {
 }
 
 func (s *service) Updated(request ProductStoreRequest, id uint) (entity.Product, error) {
-	product, err := s.repository.FindById(id)
-	products, err := s.repository.FindAll("")
+	product, err := s.repository.FindById(id, "", "")
+	products, err := s.repository.FindAll("", "")
 
 	product.Name = helper.CheckProductStoreName(request.Name, product)
 	product.Slug = helper.GeneratedProductStoreSlug(request.Name, products)
@@ -67,6 +67,6 @@ func (s *service) Updated(request ProductStoreRequest, id uint) (entity.Product,
 }
 
 func (s *service) Deleted(id uint) (entity.Product, error) {
-	product, _ := s.repository.FindById(id)
+	product, _ := s.repository.FindById(id, "", "")
 	return s.repository.Deleted(product)
 }

@@ -5,6 +5,7 @@ import "api/entity"
 type Service interface {
 	FindAll(q string, page int, per_page int, entities string) ([]entity.Customer, error)
 	Created(request CustomerRequest) (entity.Customer, error)
+	FindById(id int, entities string) (entity.Customer, error)
 }
 type service struct {
 	repository Repository
@@ -30,4 +31,8 @@ func (s *service) Created(reqeuest CustomerRequest) (entity.Customer, error) {
 	}
 	customers, err := s.repository.Created(customer)
 	return customers, err
+}
+
+func (s *service) FindById(id int, entities string) (entity.Customer, error) {
+	return s.repository.FindById(id, entities)
 }

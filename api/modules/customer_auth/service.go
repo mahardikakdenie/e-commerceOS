@@ -7,6 +7,9 @@ type Service interface {
 	GeneratedToken(request CustomerTokenRequest) (entity.CustomerToken, error)
 	FindCustommer(username string) (entity.Customer, error)
 	FindCustomerByToken(token string) (entity.CustomerToken, error)
+	Logout(token string) (entity.CustomerToken, error)
+	FindStoreById(id uint) (entity.Store, error)
+	FindStoreBySlug(slug string) (entity.Store, error)
 }
 type service struct {
 	repository Repository
@@ -36,4 +39,21 @@ func (s *service) FindCustommer(username string) (entity.Customer, error) {
 
 func (s *service) FindCustomerByToken(token string) (entity.CustomerToken, error) {
 	return s.repository.FindCustomerByToken(token)
+}
+
+func (s *service) Logout(token string) (entity.CustomerToken, error) {
+	tokens, err := s.repository.FindByToken(token)
+	if err != nil {
+		return tokens, err
+	}
+	data, err := s.repository.Logout(tokens)
+	return data, err
+}
+
+func (s *service) FindStoreById(id uint) (entity.Store, error) {
+	return s.repository.FindStoreById(id)
+}
+
+func (s *service) FindStoreBySlug(slug string) (entity.Store, error) {
+	return s.repository.FindStoreBySlug(slug)
 }

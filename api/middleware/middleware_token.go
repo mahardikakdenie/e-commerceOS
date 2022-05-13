@@ -13,6 +13,7 @@ import (
 var UserId uint
 var CustomerId uint
 var StoreId *uint
+var Token string
 
 func MyMiddleware(service auth.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
@@ -30,6 +31,7 @@ func MyMiddleware(service auth.Service) gin.HandlerFunc {
 		}
 		UserId = token.UserId
 		StoreId = token.User.StoreId
+		Token = tokens
 
 		if err != nil {
 			helper.Exception(ctx, false, "Token is incorrect", nil)
@@ -60,6 +62,7 @@ func CustomerMiddleware(service customer_auth.Service) gin.HandlerFunc {
 			return
 		}
 		CustomerId = token.CustomerId
+		Token = tokens
 		ctx.Next()
 
 	}

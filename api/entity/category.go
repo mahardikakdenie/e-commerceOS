@@ -25,7 +25,7 @@ type Product struct {
 	CategoryId  uint     `gorm:"foreignkey:CategoryID"`
 	UserId      *uint    `gorm:"foreignkey:UserID"`
 	Category    Category `json:"category" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	User        User     `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	User        User     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	StoreId     uint     `gorm:"foreignkey:StoreID"`
-	Store       Store    `json:"store" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Store       Store    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }

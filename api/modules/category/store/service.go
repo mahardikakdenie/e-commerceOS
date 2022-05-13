@@ -7,7 +7,7 @@ import (
 )
 
 type Service interface {
-	FindAll(entities string, store_id uint) ([]entity.Category, error)
+	FindAll(entities string, store_id string) ([]entity.Category, error)
 	Created(Request Request) (entity.Category, error)
 	Show(id uint, entities string) (entity.Category, error)
 	Updated(id uint, request Request) (entity.Category, error)
@@ -21,7 +21,7 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (s *service) FindAll(entities string, store_id uint) ([]entity.Category, error) {
+func (s *service) FindAll(entities string, store_id string) ([]entity.Category, error) {
 	return s.repository.FindAll(entities, store_id)
 }
 

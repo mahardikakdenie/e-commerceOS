@@ -3,6 +3,7 @@ package controller
 import (
 	"api/entity"
 	"api/helper"
+	"api/middleware"
 	"api/modules/customer"
 	"strconv"
 
@@ -28,6 +29,17 @@ func (c *CustomerController) Index(ctx *gin.Context) {
 		return
 	}
 	helper.Responses(ctx, true, "Success", customers, page, per_page)
+}
+
+func (c *CustomerController) Me(ctx *gin.Context) {
+	entities := ctx.Query("entities")
+	customer, err := c.service.FindById(int(middleware.CustomerId), entities)
+	if err != nil {
+		helper.Exception(ctx, false, err.Error(), err)
+		return
+	}
+	response := Response(customer)
+	helper.Responses(ctx, true, "Success", response, 0, 0)
 }
 
 func (c CustomerController) Store(ctx *gin.Context) {
@@ -61,6 +73,8 @@ func Response(v entity.Customer) customer.CustomerResponse {
 		UpdateAt:  v.UpdatedAt,
 		CreateAt:  v.CreatedAt,
 		DeletedAt: v.DeletedAt,
+		StoreId:   v.StoreId,
+		Store:     v.Store,
 	}
 
 	return db_data

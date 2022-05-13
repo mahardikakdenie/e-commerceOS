@@ -7,11 +7,12 @@
         </div>
       </div>
       <div class="row form--login">
-        <form action="">
+        <form @submit.prevent.enter="login" action="">
           <div class="col form--email">
             <div class="form-group">
               <input
-                type="email"
+                v-model="form.email"
+                type="text"
                 class="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
@@ -22,16 +23,15 @@
           <div class="col">
             <div class="form-group">
               <input
-                type="email"
+                v-model="form.password"
+                type="password"
                 class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
+                placeholder="Enter Password"
               />
             </div>
           </div>
           <div class="col btn-login">
-            <button class="btn">Login</button>
+            <button type="submit" class="btn">Login</button>
           </div>
           <div class="col btn--register">
             <p>Belom Punya Akun ? <a href="">Buat Akun</a></p>
@@ -46,70 +46,167 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data: () => ({
+    form: {
+      email: "",
+      password: "",
+    },
+    customer: {},
+  }),
+
+  computed: {
+    isLogin() {
+      return this.$store.state.auth.isLogin;
+    },
+  },
+  methods: {
+    login() {
+      this.$store
+        .dispatch("auth/login", {
+          email: this.form.email,
+          password: this.form.password,
+          store_slug: this.$route.params.wilcard,
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            // console.log(res);
+            location.reload();
+          } else {
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", this.$swal.stopTimer);
+                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+              },
+              popup: "swal2-show",
+              backdrop: "swal2-backdrop-show",
+              icon: "swal2-icon-show",
+            });
+            Toast.fire({
+              icon: "success",
+              title: `${res.data.meta.message}`,
+            });
+          }
+        });
+    },
+    checkLogout() {
+      // if (localStorage.getItem("access_token") === null) {
+      //   this.$router.push(`/${this.$route.params.wilcard}/`);
+      //   const Toast = this.$swal.mixin({
+      //     toast: true,
+      //     position: "bottom-end",
+      //     showConfirmButton: false,
+      //     timer: 3000,
+      //     timerProgressBar: true,
+      //     didOpen: (toast) => {
+      //       toast.addEventListener("mouseenter", this.$swal.stopTimer);
+      //       toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+      //     },
+      //     popup: "swal2-show",
+      //     backdrop: "swal2-backdrop-show",
+      //     icon: "swal2-icon-show",
+      //   });
+      //   Toast.fire({
+      //     icon: "success",
+      //     title: "cannot access this route",
+      //   });
+      //   this.$router.push(`/${this.$route.params.wilcard}/`);
+      // }
+      if (
+        localStorage.getItem("store_id") !==
+        localStorage.getItem("store_customer_id")
+      ) {
+        localStorage.removeItem("access_token");
+        localStorage.setItem("isLogin", false);
+        if (localStorage.getItem("isLogin") === "false") {
+          // location.reload();
+        }
+        const Toast = this.$swal.mixin({
+          toast: true,
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", this.$swal.stopTimer);
+            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+          },
+          popup: "swal2-show",
+          backdrop: "swal2-backdrop-show",
+          icon: "swal2-icon-show",
+        });
+        Toast.fire({
+          icon: "success",
+          title: "You Logout",
+        });
+      }
+    },
+    me() {
+      axios.defaults.headers.common.Authorization =
+        "Bearer " + localStorage.getItem("access_token");
+      axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+      const params = {
+        entities: "Store",
+      };
+      axios.get("customer/me", { params: params }).then((res) => {
+        if (res.data.meta.status) {
+          console.log(res);
+          localStorage.setItem("customer", JSON.stringify(res.data.data));
+          if (localStorage.getItem("isLogin") === "true") {
+            console.log(
+              localStorage.getItem("store_customer_id") !==
+                localStorage.getItem("store_id")
+            );
+            console.log(
+              "store_customer_id",
+              localStorage.getItem("store_customer_id")
+            );
+            console.log("store_jd", localStorage.getItem("store_id"));
+            if (
+              localStorage.getItem("store_customer_id") !=
+              localStorage.getItem("store_id")
+            ) {
+              console.log("tidak cocok");
+
+              localStorage.removeItem("access_token");
+              localStorage.setItem("isLogin", false);
+              location.reload();
+            }
+            localStorage.setItem("wild_route", res.data.data.store.Slug);
+            this.$router.push(`/${localStorage.getItem("wild_route")}/`);
+          }
+          const Toast = this.$swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", this.$swal.stopTimer);
+              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+            },
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          });
+          Toast.fire({
+            icon: "success",
+            title: `Selamat Datang ${res.data.data.username}`,
+          });
+          this.customer = res.data.data;
+          console.log("Customer =>", this.customer);
+          localStorage.setItem("store_customer_id", res.data.data.store_id);
+        }
+      });
+    },
+  },
+};
 </script>
 
-<style>
-.login {
-  padding: 70px 0 100px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.login .card {
-  width: 577.9px;
-  height: 551px;
-  padding: 45px;
-  box-shadow: 0px 0px 70px -18px grey;
-}
-
-.login .card h2 {
-  font-weight: bold;
-}
-
-.login .card .form--login {
-  width: 100%;
-  margin: 39px 0 0 0;
-  border-radius: 10px;
-  padding: 14px 0;
-  border: 2px solid grey;
-}
-
-.login .card .form--login .form--email {
-  width: 100%;
-  margin: 7px 0 42px 0;
-}
-
-.login .card .form--login .btn-login {
-  margin: 60px 0 0 0;
-}
-.login .card .form--login .btn-login button {
-  width: 100%;
-  background-color: #e7ab3c;
-  color: #fff;
-  font-weight: bold;
-}
-
-.login .card .form--login .btn-login button:hover {
-  opacity: 0.9;
-}
-
-.login .card .form--login .btn-login button:focus {
-  outline: none;
-}
-
-.login .card .form--login .btn--register {
-  margin: 10px 0 0 0;
-}
-
-.login .card .form--login .btn--register a:hover {
-  color: #e7ab3c;
-}
-.login .card .form--login .btn--forgot {
-  margin: 34px 0 0 0;
-}
-
-.login .card .form--login .btn--forgot a:hover {
-  color: #e7ab3c;
-}
-</style>
+<style></style>

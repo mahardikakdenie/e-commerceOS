@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	FindAll(entities string, store_id uint) ([]entity.Category, error)
+	FindAll(entities string, store_id string) ([]entity.Category, error)
 	Created(category entity.Category) (entity.Category, error)
 	Show(id uint, entities string) (entity.Category, error)
 	Updated(category entity.Category) (entity.Category, error)
@@ -22,9 +22,9 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll(entities string, store_id uint) ([]entity.Category, error) {
+func (r *repository) FindAll(entities string, store_id string) ([]entity.Category, error) {
 	var categories []entity.Category
-	err := r.db.Scopes(models.Entities(entities), models.ByStore(store_id)).Find(&categories).Error
+	err := r.db.Scopes(models.Entities(entities), models.ByStoreId(store_id)).Find(&categories).Error
 	return categories, err
 }
 

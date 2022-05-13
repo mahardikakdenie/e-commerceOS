@@ -16,7 +16,7 @@ func SearchCustomerUsername(search string) func(*gorm.DB) *gorm.DB {
 
 	return func(d *gorm.DB) *gorm.DB {
 		if search != "" {
-			return d.Where("username LIKE ?", "%"+search+"%")
+			return d.Where("username = ?", search).Or("email = ?", search)
 		}
 		return d
 	}
@@ -35,6 +35,15 @@ func SearchCustomerToken(search string) func(*gorm.DB) *gorm.DB {
 	return func(d *gorm.DB) *gorm.DB {
 		if search != "" {
 			return d.Where("auth_token LIKE ?", "%"+search+"%")
+		}
+		return d
+	}
+}
+
+func SearchStoreSlug(slug string) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if slug != "" {
+			return d.Where("slug LIKE ?", "%"+slug+"%")
 		}
 		return d
 	}
