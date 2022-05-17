@@ -72,6 +72,7 @@ export default {
         .then((res) => {
           if (res.data.meta.status) {
             // console.log(res);
+            this.$router.push(`/${this.$route.params.wilcard}/`);
             location.reload();
           } else {
             const Toast = this.$swal.mixin({

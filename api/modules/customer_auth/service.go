@@ -1,6 +1,8 @@
 package customer_auth
 
-import "api/entity"
+import (
+	"api/entity"
+)
 
 type Service interface {
 	FindAll() ([]entity.CustomerToken, error)
@@ -10,6 +12,7 @@ type Service interface {
 	Logout(token string) (entity.CustomerToken, error)
 	FindStoreById(id uint) (entity.Store, error)
 	FindStoreBySlug(slug string) (entity.Store, error)
+	Register(customer CustomerRequest) (entity.Customer, error)
 }
 type service struct {
 	repository Repository
@@ -56,4 +59,16 @@ func (s *service) FindStoreById(id uint) (entity.Store, error) {
 
 func (s *service) FindStoreBySlug(slug string) (entity.Store, error) {
 	return s.repository.FindStoreBySlug(slug)
+}
+
+func (s *service) Register(customer CustomerRequest) (entity.Customer, error) {
+	var customerEntity entity.Customer
+	customerEntity = entity.Customer{
+		Username: customer.Username,
+		Password: customer.Password,
+		Email:    customer.Email,
+		Contact:  customer.Contact,
+		StoreId:  customer.StoreId,
+	}
+	return s.repository.Register(customerEntity)
 }

@@ -1,7 +1,11 @@
 <template>
   <!-- <div class="home"> -->
   <div>
-    <Navbar @logout="logout" />
+    <Navbar
+      @logout="logout"
+      :propsUser="computedMe"
+      :propsCategory="computedCategories"
+    />
     <router-view></router-view>
     <Footer />
   </div>
@@ -33,11 +37,15 @@ export default {
     computedStore() {
       return this.$store.state.store.store;
     },
+    computedCategories() {
+      return this.$store.state.category.categories;
+    },
   },
   mounted() {
     this.getStore();
     this.me();
     this.checkLogout();
+    this.getCategories();
   },
   methods: {
     getStore() {
@@ -61,6 +69,18 @@ export default {
           }
         });
     },
+    getCategories() {
+      this.$store
+        .dispatch("category/getCategories", {
+          entities: "Product",
+          store_id: localStorage.getItem("store_id"),
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            console.log("categories =>", res.data.data);
+          }
+        });
+    },
     me() {
       this.$store
         .dispatch("auth/me", {
@@ -74,7 +94,7 @@ export default {
     },
     checkLogout() {
       if (localStorage.getItem("access_token") === null) {
-        this.$router.push(`/${this.$route.params.wilcard}/`);
+        // this.$router.push(`/${this.$route.params.wilcard}/`);
         const Toast = this.$swal.mixin({
           toast: true,
           position: "bottom-end",
@@ -102,7 +122,7 @@ export default {
         localStorage.getItem("access_token") !== null
       ) {
         localStorage.removeItem("access_token");
-        localStorage.setItem("isLogin", false);
+        localStorage.setItem("isLogin", "false");
         if (localStorage.getItem("isLogin") !== "false") {
           location.reload();
         }

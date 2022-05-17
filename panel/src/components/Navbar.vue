@@ -26,6 +26,39 @@
               >{{ item.text }}</router-link
             >
           </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarScrollingDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Product
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li v-for="(item, i) in propsCategory" :key="i">
+                <a class="dropdown-item" href="#">{{ item.name }}</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li
+                :class="` ${
+                  $route.path === `/${store_route}/shopping-page`
+                    ? 'bg-primary'
+                    : ''
+                }`"
+              >
+                <a
+                  @click="toRoute('shopping-page')"
+                  :class="`dropdown-item dropdown-item-all`"
+                  href="#"
+                >
+                  Semua Product</a
+                >
+              </li>
+            </ul>
+          </li>
           <!-- <li
             :class="`nav-item ${
               $route.path === `/${$route.params.wilcard}/cart` ? 'active' : ''
@@ -45,11 +78,11 @@
                 id="dropdownMenuLink"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                >Mahardika Kessuma Denie</span
+                >{{ propsUser.email }}</span
               >
-              <span class="nick--customer mobile--user"
-                >Mahardika Kessuma Denie</span
-              >
+              <span class="nick--customer mobile--user">{{
+                propsUser.email
+              }}</span>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
                   <a class="dropdown-item" href="#"
@@ -131,17 +164,28 @@
 
 <script>
 export default {
+  props: {
+    propsUser: {
+      type: Object,
+      default: null,
+    },
+    propsCategory: {
+      type: Array,
+      default: null,
+    },
+  },
   data: () => ({
     active: "Home",
+    store_route: localStorage.getItem("wild_route"),
     itemNavbar: [
       {
         text: "Home",
         to: `/${localStorage.getItem("wild_route")}/`,
       },
-      {
-        text: "Product",
-        to: `/${localStorage.getItem("wild_route")}/shopping-page`,
-      },
+      // {
+      //   text: "Tentang",
+      //   to: `/${localStorage.getItem("wild_route")}/shopping-page`,
+      // },
       {
         text: "Contact",
         to: `/${localStorage.getItem("wild_route")}/contact`,
@@ -153,7 +197,7 @@ export default {
     // icon: ``
   }),
   mounted() {
-    // console.log("wilcard :", this.$route.params.wilcard);
+    console.log("wilcard :", this.$route.path);
   },
   methods: {
     setNav(item) {
@@ -189,6 +233,9 @@ export default {
   left: 70px !important;
   min-width: 12rem;
   padding: 10px 2px 10px 1px;
+}
+.dropdown-item-all.active {
+  background-color: red;
 }
 @media screen and (max-width: 400px) {
   .dropdown-menu {

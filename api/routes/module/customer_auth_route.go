@@ -10,5 +10,6 @@ func CustomerAuthRoute(v1 *gin.RouterGroup, c *controller.CustomerAuthController
 	customerAuth := v1.Group("customer_auth")
 	customerAuth.GET("/", middleware, c.Index)
 	customerAuth.POST("/login", cors, c.Login)
+	customerAuth.POST("/register", cors, c.Register)
 	customerAuth.POST("/logout", cors, middleware, c.Logout)
 }

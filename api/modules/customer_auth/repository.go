@@ -16,6 +16,7 @@ type Repository interface {
 	Logout(token entity.CustomerToken) (entity.CustomerToken, error)
 	FindStoreById(id uint) (entity.Store, error)
 	FindStoreBySlug(slug string) (entity.Store, error)
+	Register(customer entity.Customer) (entity.Customer, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -69,4 +70,9 @@ func (r *repository) FindStoreBySlug(slug string) (entity.Store, error) {
 	var store entity.Store
 	err := r.db.Scopes(models.SearchStoreSlug(slug)).First(&store).Error
 	return store, err
+}
+
+func (r *repository) Register(customer entity.Customer) (entity.Customer, error) {
+	err := r.db.Create(&customer).Error
+	return customer, err
 }

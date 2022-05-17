@@ -28,3 +28,30 @@ func ByStoreId(store_id string) func(*gorm.DB) *gorm.DB {
 		return d
 	}
 }
+
+func ByCategoryId(category_id string) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if category_id != "" {
+			d.Where("category_id = ?", category_id)
+		}
+		return d
+	}
+}
+
+func SearchCategoryId(category_id uint) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if category_id != 0 {
+			d.Where("category_id = ?", category_id)
+		}
+		return d
+	}
+}
+
+func ByCategorySlug(category_slug string) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if category_slug != "" {
+			d.Where("slug = ?", category_slug)
+		}
+		return d
+	}
+}

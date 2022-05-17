@@ -48,3 +48,12 @@ func SearchStoreSlug(slug string) func(*gorm.DB) *gorm.DB {
 		return d
 	}
 }
+
+func Views(views int) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if views == 1 {
+			return d.Order("view desc")
+		}
+		return d
+	}
+}

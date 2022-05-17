@@ -52,6 +52,14 @@ const routes = [
         },
       },
       {
+        path: "register",
+        name: "Register",
+        component: () => import("../views/Register.vue"),
+        meta: {
+          requiresVisitor: true,
+        },
+      },
+      {
         path: "product/:id",
         name: "Show Product",
         component: () => import("../views/pages/product/_Show.vue"),

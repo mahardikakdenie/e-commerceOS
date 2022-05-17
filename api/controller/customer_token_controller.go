@@ -7,6 +7,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -96,4 +97,25 @@ func (c *CustomerAuthController) Logout(ctx *gin.Context) {
 		return
 	}
 	helper.Responses(ctx, true, "Success", data, 0, 0)
+}
+
+func (c *CustomerAuthController) Register(ctx *gin.Context) {
+	var customer_request customer_auth.CustomerRequest
+	store_id, _ := strconv.Atoi(ctx.PostForm("store_id"))
+	password := ctx.PostForm("password")
+	hash, _ := helper.HashPassword(password)
+	customer_request = customer_auth.CustomerRequest{
+		Username: ctx.PostForm("username"),
+		Email:    ctx.PostForm("email"),
+		Password: hash,
+		Contact:  ctx.PostForm("contact"),
+		StoreId:  uint(store_id),
+	}
+	customer, customer_err := c.service.Register(customer_request)
+	if customer_err != nil {
+		helper.Exception(ctx, false, "Error", customer_err)
+		return
+	}
+
+	helper.Responses(ctx, true, "Success", customer, 0, 0)
 }
