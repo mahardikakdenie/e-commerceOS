@@ -7,6 +7,7 @@
 @import url(contact/index.css);
 @import url(show_product/index.css);
 @import url(cart/index.css);
+@import url(login/index.css);
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Pacifico&display=swap');
 #app {
     font-family: 'Inter', sans-serif;

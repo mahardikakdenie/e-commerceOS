@@ -19,7 +19,8 @@ func NewCategoryStoreController(service category_store.Service) *CategoryStoreCo
 
 func (c *CategoryStoreController) Index(ctx *gin.Context) {
 	entities := ctx.Query("entities")
-	categories, err := c.service.FindAll(entities, *middleware.StoreId)
+	store_id := ctx.Query("store_id")
+	categories, err := c.service.FindAll(entities, store_id)
 	if err != nil {
 		helper.Exception(ctx, false, "Category not found", err)
 		return
@@ -44,7 +45,7 @@ func (c *CategoryStoreController) Index(ctx *gin.Context) {
 }
 
 func (c *CategoryStoreController) Created(ctx *gin.Context) {
-	categories, err := c.service.FindAll("", *middleware.StoreId)
+	categories, err := c.service.FindAll("", ctx.Query("store_id"))
 	reqeust := category_store.Request{
 		Name:        ctx.PostForm("name"),
 		Slug:        helper.GeneratedCategorySlug(ctx.PostForm("name"), categories),
@@ -85,7 +86,7 @@ func (c *CategoryStoreController) Updated(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	check, err := c.service.Show(uint(id), "")
 	var category category_store.Request
-	categories, err := c.service.FindAll("", *middleware.StoreId)
+	categories, err := c.service.FindAll("", ctx.Query("store_id"))
 	if err != nil || check.ID == 0 {
 		helper.Exception(ctx, false, "Category not found", err)
 		return

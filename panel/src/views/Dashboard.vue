@@ -1,27 +1,23 @@
 <template>
   <div class="home">
     <Product title="Himatif Store Website" />
-    <div v-for="i in 3" :key="i">
-      <List :list="dataClothes" title="Clothes" />
-      <Slider />
-      <List :list="dataBucket" title="Bouquet" />
-    </div>
+    <!-- <div v-for="(item, i) in computedCategories" :key="i"> -->
+    <!-- <Slider v-if="i !== 0" /> -->
+    <List :list="computedProduct" title="Product" />
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
-// import Navbar from "@/components/Navbar.vue";
 import Product from "@/components/product/Banner.vue";
 import List from "@/components/product/list/List.vue";
-import Slider from "@/components/product/slider/Slider.vue";
+// import Slider from "@/components/product/slider/Slider.vue";
 
 export default {
   name: "Home",
   components: {
     Product,
-    Slider,
+    // Slider,
     List,
   },
   data: () => ({
@@ -42,5 +38,46 @@ export default {
       },
     ],
   }),
+  computed: {
+    computedCategories() {
+      return this.$store.state.category.categories;
+    },
+    computedProduct() {
+      return this.$store.state.product.views;
+    },
+  },
+  mounted() {
+    this.getCategories();
+    this.getBestSeller();
+    console.log("ini Dashboard");
+  },
+  methods: {
+    getCategories() {
+      this.$store
+        .dispatch("category/getCategories", {
+          // entities: "User,Store",
+          store_id: localStorage.getItem("store_id"),
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.meta.status) {
+            console.log(res);
+          }
+        });
+    },
+    getBestSeller() {
+      this.$store
+        .dispatch("product/getBestSeller", {
+          page: 1,
+          per_page: 2,
+          entities: "Category",
+          store_id: localStorage.getItem("store_id"),
+          is_seller: 1,
+        })
+        .then((res) => {
+          console.log("ini best seller => ", res.data.data);
+        });
+    },
+  },
 };
 </script>

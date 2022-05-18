@@ -8,7 +8,8 @@
       <div class="col-lg-6">
         <div class="card">
           <img
-            :src="item.url"
+            v-if="item.link"
+            :src="item.link.image"
             width="100%"
             height="543"
             class="card-img-top img--brand"
@@ -20,21 +21,16 @@
         <div class="__brand">
           <div class="title--brand">
             <h1 class="--brand" @click="$router.push(`/product/${i + 1}`)">
-              Kacamata Photocromic Korea 2 In 1 Kacamata Lensa Photocromic Anti
-              Uv Wanita Dan Pria
+              {{ item.name }}
             </h1>
           </div>
           <div class="paragrap--brand">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-              officia commodi totam aperiam optio corrupti nesciunt, est at
-              natus odio velit id excepturi ipsam maxime aut voluptate eius sed
-              ea quidem molestias qui soluta doloribus! Dolorem cum reiciendis
-              eum ratione.
+              {{ item.description }}
             </p>
           </div>
           <div class="price--brand">
-            <h3 class="font-bold">Rp.20000</h3>
+            <h3 class="font-bold">Rp.{{ item.price }}</h3>
           </div>
           <div class="action--brand">
             <button class="btn action--brand__buy">Buy</button>

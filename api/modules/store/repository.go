@@ -13,6 +13,7 @@ type Repository interface {
 	FindById(id int) (entity.Store, error)
 	Updated(entity.Store) (entity.Store, error)
 	Deleted(entity.Store) (entity.Store, error)
+	FindBySlug(slug string) (entity.Store, error)
 }
 
 type repository struct {
@@ -53,5 +54,11 @@ func (r *repository) Updated(store entity.Store) (entity.Store, error) {
 
 func (r *repository) Deleted(store entity.Store) (entity.Store, error) {
 	err := r.db.Delete(&store).Error
+	return store, err
+}
+
+func (r *repository) FindBySlug(slug string) (entity.Store, error) {
+	var store entity.Store
+	err := r.db.Where("slug = ?", slug).First(&store).Error
 	return store, err
 }
