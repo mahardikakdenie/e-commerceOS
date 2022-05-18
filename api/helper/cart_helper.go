@@ -15,16 +15,16 @@ import (
 // 	return tshirt_id
 // }
 
-func CheckerCartUserId(user_id uint, data entity.Cart) uint {
-	if user_id != 0 {
-		data.UserID = user_id
-	} else {
-		user_id = data.UserID
-		data.UserID = user_id
-	}
+// func CheckerCartUserId(user_id uint, data entity.Cart) uint {
+// 	if user_id != 0 {
+// 		data.UserID = user_id
+// 	} else {
+// 		user_id = data.UserID
+// 		data.UserID = user_id
+// 	}
 
-	return user_id
-}
+// 	return user_id
+// }
 
 func CheckCartStatus(status string, data entity.Cart) string {
 	if status != "" {

@@ -11,4 +11,5 @@ type Customer struct {
 	Contact  string `gorm:"type:varchar(255);"`
 	StoreId  uint
 	Store    Store
+	Cart     []Cart
 }
