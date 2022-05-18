@@ -4,6 +4,7 @@ import (
 	"api/helper"
 	"api/middleware"
 	product_store "api/modules/product/store"
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,23 +20,62 @@ func NewProductStoreController(service product_store.Service) *ProductStoreContr
 
 func (c *ProductStoreController) Index(ctx *gin.Context) {
 	entities := ctx.Query("entities")
-	products, err := c.service.FindAll(entities)
+	store_slug := ctx.Query("store_slug")
+	fmt.Println("Store_slug := ", store_slug)
+	products, err := c.service.FindAll(entities, store_slug)
 	if err != nil {
 		helper.Exception(ctx, false, "Product not found", err)
 		return
 	}
 
-	helper.Responses(ctx, true, "Success", products, 0, 0)
+	var response []product_store.ProductStoreResponse
+
+	for _, v := range products {
+		response = append(response, product_store.ProductStoreResponse{
+			Name:       v.Name,
+			Price:      int(v.Price),
+			Stock:      int(v.Stock),
+			Image:      v.Image,
+			CategoryId: uint(v.CategoryId),
+			StoreId:    uint(v.StoreId),
+			UserId:     uint(*v.UserId),
+			User:       v.User,
+			Category:   v.Category,
+			Store:      v.Store,
+		})
+	}
+
+	helper.Responses(ctx, true, "Success", response, 0, 0)
 }
 
 func (c *ProductStoreController) Show(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	product, err := c.service.FindById(uint(id))
+	store_id := ctx.Query("store_id")
+	compare_id, _ := strconv.Atoi(store_id)
+	entities := ctx.Query("entities")
+	product, err := c.service.FindById(uint(id), store_id, entities)
+
 	if err != nil {
 		helper.Exception(ctx, false, "Product not found", err)
 		return
 	}
-	helper.Responses(ctx, true, "Success", product, 0, 0)
+	if uint(compare_id) != product.StoreId {
+		helper.Exception(ctx, false, "Product not found", err)
+		return
+	}
+	response := product_store.ProductStoreResponse{
+		Name:       product.Name,
+		Price:      int(product.Price),
+		Stock:      int(product.Stock),
+		Image:      product.Image,
+		CategoryId: uint(product.CategoryId),
+		StoreId:    uint(product.StoreId),
+		UserId:     uint(*product.UserId),
+		User:       product.User,
+		Category:   product.Category,
+		Store:      product.Store,
+	}
+	helper.Responses(ctx, true, "Success", response, 0, 0)
 }
 
 func (c *ProductStoreController) Created(ctx *gin.Context) {

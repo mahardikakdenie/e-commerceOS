@@ -2,7 +2,6 @@ package cart
 
 import (
 	"api/entity"
-	"api/middleware"
 )
 
 type Service interface {
@@ -27,7 +26,7 @@ func (service *service) FindAll(entities string) ([]entity.Cart, error) {
 func (service *service) Created(request CartRequest) (entity.Cart, error) {
 	var cart entity.Cart
 	cart = entity.Cart{
-		UserID: uint(middleware.UserId),
+		// UserID: uint(middleware.UserId),
 		// TShirtID: uint(request.TShirtID),
 		Quantity: request.Quantity,
 		Status:   "pending",
@@ -50,7 +49,7 @@ func (s *service) Deleted(id int) (entity.Cart, error) {
 func (s *service) Updated(request CartRequest, id int) (entity.Cart, error) {
 	cart, err := s.repository.FindById(id)
 	cart = entity.Cart{
-		UserID: uint(middleware.UserId),
+		// UserID: uint(middleware.UserId),
 		// TShirtID: request.TShirtID,
 		Quantity: request.Quantity,
 		Status:   request.Status,
