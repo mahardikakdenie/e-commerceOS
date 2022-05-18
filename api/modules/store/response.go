@@ -7,6 +7,7 @@ import (
 )
 
 type StoreResponses struct {
+	Id        uint           `json:"id"`
 	Name      string         `json:"name"`
 	Slug      string         `json:"slug"`
 	Desc      string         `json:"description"`

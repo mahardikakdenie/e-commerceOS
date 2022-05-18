@@ -2,16 +2,15 @@ package product_store
 
 import (
 	"api/entity"
-	"api/middleware"
 	"api/models"
 
 	"gorm.io/gorm"
 )
 
 type Repository interface {
-	FindAll(entities string) ([]entity.Product, error)
+	FindAll(entities string, store_slug string) ([]entity.Product, error)
 	Created(product entity.Product) (entity.Product, error)
-	FindById(id uint) (entity.Product, error)
+	FindById(id uint, store_id string, entities string) (entity.Product, error)
 	Updated(product entity.Product) (entity.Product, error)
 	Deleted(product entity.Product) (entity.Product, error)
 }
@@ -23,9 +22,9 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAll(entities string) ([]entity.Product, error) {
+func (r *repository) FindAll(entities string, store_slug string) ([]entity.Product, error) {
 	var products []entity.Product
-	err := r.db.Scopes(models.Entities(entities), models.ByStore(*middleware.StoreId)).Find(&products).Error
+	err := r.db.Scopes(models.Entities(entities), models.ByStoreId(store_slug)).Find(&products).Error
 	return products, err
 }
 
@@ -34,9 +33,9 @@ func (r *repository) Created(product entity.Product) (entity.Product, error) {
 	return product, err
 }
 
-func (r *repository) FindById(id uint) (entity.Product, error) {
+func (r *repository) FindById(id uint, store_id string, entities string) (entity.Product, error) {
 	var product entity.Product
-	err := r.db.First(&product, id).Error
+	err := r.db.Scopes(models.ByStoreId(store_id), models.Entities(entities)).First(&product, id).Error
 	return product, err
 }
 

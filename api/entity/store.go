@@ -8,4 +8,5 @@ type Store struct {
 	Slug        string     `gorm:"type:varchar(100);unique_index"`
 	Description string     `gorm:"type:varchar(355)"`
 	Customer    []Customer `gorm:"customer_store;"`
+	Cart        []Cart     `gorm:"cart_store;"`
 }

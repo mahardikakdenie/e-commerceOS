@@ -107,6 +107,17 @@ func (c *StoreController) Delete(ctx *gin.Context) {
 	helper.Responses(ctx, true, "Success", store_delete, 0, 0)
 }
 
+func (c *StoreController) FindBySlug(ctx *gin.Context) {
+	slug := ctx.Param("slug")
+	store, err := c.service.FindBySlug(slug)
+	if err != nil {
+		helper.Exception(ctx, false, err.Error(), err)
+		return
+	}
+	data := DataStoreResponse(store)
+	helper.Responses(ctx, true, "Success", data, 0, 0)
+}
+
 func DataStoreResponse(data entity.Store) store.StoreResponses {
 	return store.StoreResponses{
 		Name:      data.Name,
@@ -115,6 +126,7 @@ func DataStoreResponse(data entity.Store) store.StoreResponses {
 		CreatedAt: data.CreatedAt,
 		UpdatedAt: data.UpdatedAt,
 		DeletedAt: data.DeletedAt,
+		Id:        data.ID,
 	}
 }
 
@@ -128,6 +140,7 @@ func DataStoreResponses(data []entity.Store) []store.StoreResponses {
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
 			DeletedAt: v.DeletedAt,
+			Id:        v.ID,
 		})
 	}
 	return responses

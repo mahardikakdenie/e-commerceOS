@@ -7,42 +7,75 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "",
-    redirect: "/",
+    path: "/:wilcard",
     name: "Dashboard",
     component: () => import("../views/Index.vue"),
     children: [
       {
-        path: "/",
+        path: "",
         name: "About",
         component: Home,
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
-        path: "/shopping-page",
+        path: "shopping-page",
         name: "Shooping",
         component: () => import("../views/ShoopingPage.vue"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
-        path: "/contact",
+        path: "contact",
         name: "Contact",
         component: () => import("../views/Contact.vue"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
-        path: "/cart",
+        path: "cart",
         name: "Cart",
         component: () => import("../views/Cart.vue"),
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
-        path: "/login",
+        path: "login",
         name: "Login",
         component: () => import("../views/Login.vue"),
+        meta: {
+          requiresVisitor: true,
+        },
       },
       {
-        path: "/product/:id",
+        path: "register",
+        name: "Register",
+        component: () => import("../views/Register.vue"),
+        meta: {
+          requiresVisitor: true,
+        },
+      },
+      {
+        path: "product/:id",
         name: "Show Product",
         component: () => import("../views/pages/product/_Show.vue"),
+        meta: {
+          requiresAuth: true,
+        },
       },
     ],
+  },
+  {
+    path: "/",
+    name: "error",
+    component: () => import("../views/Blank.vue"),
+    meta: {
+      error: true,
+    },
   },
 ];
 
@@ -51,5 +84,32 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some((record) => record.meta.requiresAuth)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     // if (!localStorage.getItem("token")) {
+//     //   next({ name: "Login" });
+//     // }
+//   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
+//     // this route requires auth, check if logged in
+//     // if not, redirect to login page.
+//     if (localStorage.getItem("access_token")) {
+//       // console.log(localStorage.getItem("access_item"));
+//       // if (to.name === "Login") {
+//       //   next({ name: "About" });
+//       // }
+//       // next({
+//       //   path: "/",
+//       //   query: { redirect: to.fullPath },
+//       // });
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next(); // make sure to always call next()!
+//   }
+// });
 
 export default router;
