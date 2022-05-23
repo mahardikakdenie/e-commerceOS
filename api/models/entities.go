@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Entities(entities string) func(db *gorm.DB) *gorm.DB {
+func Entities(entities string) func(*gorm.DB) *gorm.DB {
 
 	return func(db *gorm.DB) *gorm.DB {
 
