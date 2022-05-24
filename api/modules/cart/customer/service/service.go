@@ -49,5 +49,21 @@ func (s *service) InsertCart(cart entity.Cart, store_id uint, product_id uint) (
 
 	data, err := s.repo.InsertCart(cart)
 	return data, err
+}
 
+func (s *service) DeleteCart(id uint, store_id uint, product_id uint) (entity.Cart, error) {
+	// check custmer is a valid customer
+	if customer, err := s.customerRepo.Me(middleware.CustomerId); customer.StoreId != store_id {
+		return entity.Cart{}, err
+	}
+
+	// check product is a valid product
+	if product, err := s.productRepo.GetId(product_id, store_id); product.StoreId != store_id {
+		return entity.Cart{}, err
+	}
+
+	dataCart, err := s.repo.GetCartById(id)
+
+	data, err := s.repo.DeleteCart(dataCart)
+	return data, err
 }

@@ -15,5 +15,6 @@ func CartCustomerRoute(v1 *gin.RouterGroup, controller *cart_customer_controller
 	cart_cuss_route := v1.Group("/cart_customer")
 
 	cart_cuss_route.GET("/carts", cors, controller.Index)
-	cart_cuss_route.POST("/carts/:store_id/:product_id", cors, middleware, controller.Store)
+	cart_cuss_route.POST("/carts/:store_id/store/:product_id/product", cors, middleware, controller.Store)
+	cart_cuss_route.DELETE("/carts/:id/cart/:store_id/store/:product_id/product", cors, middleware, controller.Deleted)
 }

@@ -38,3 +38,17 @@ func (r *repository) InsertCart(cart entity.Cart) (entity.Cart, error) {
 	err := r.db.Create(&cart).Error
 	return cart, err
 }
+
+func (r *repository) DeleteCart(data entity.Cart) (entity.Cart, error) {
+	var cart entity.Cart
+	err := r.db.Delete(&data).Error
+
+	return cart, err
+}
+
+func (r *repository) GetCartById(id uint) (entity.Cart, error) {
+	var cart entity.Cart
+	err := r.db.
+		Find(&cart, id).Error
+	return cart, err
+}

@@ -39,7 +39,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
               <li v-for="(item, i) in propsCategory" :key="i">
-                <a class="dropdown-item" href="#">{{ item.name }}</a>
+                <a class="dropdown-item">{{ item.name }}</a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li
@@ -52,7 +52,6 @@
                 <a
                   @click="toRoute('shopping-page')"
                   :class="`dropdown-item dropdown-item-all`"
-                  href="#"
                 >
                   Semua Product</a
                 >
@@ -123,8 +122,9 @@
                       <span class="visually-hidden">unread messages</span>
                     </span> -->
                     Cart
-                    <span class="S badge badge--dekstop rounded-pill bg-danger"
-                      >4</span
+                    <span
+                      class="S badge badge--dekstop rounded-pill bg-danger"
+                      >{{ propsCart.length }}</span
                     ></a
                   >
                 </li>
@@ -172,6 +172,10 @@ export default {
     propsCategory: {
       type: Array,
       default: null,
+    },
+    propsCart: {
+      type: Array,
+      default: () => [],
     },
   },
   data: () => ({
