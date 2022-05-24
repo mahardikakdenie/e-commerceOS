@@ -2,11 +2,11 @@
   <div class="container cart">
     <!-- <div class="row">
       <div class="col"> -->
-    <div class="card mb-3" v-for="(v, i) in list" :key="i" style="">
+    <div class="card mb-3" v-for="(v, i) in propsCart" :key="i" style="">
       <div class="row g-0">
         <div class="col-md-2">
           <img
-            :src="v.image"
+            :src="v.product.image"
             class="img-fluid rounded-start controll--img"
             alt="..."
           />
@@ -14,7 +14,7 @@
         <div class="col-md-10">
           <div class="card-body">
             <h4 class="card-title">
-              {{ v.title }}
+              {{ v.product.name }}
             </h4>
             <div>
               <select
@@ -23,15 +23,17 @@
                 aria-label="Default select example"
               >
                 <option selected>Variant</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
               </select>
             </div>
             <div class="card--info-action">
               <div class="card--info-action-price">
                 <p class="ml-2 text-current-price">
-                  {{ v.price }}, x {{ v.mount }} || Rp.{{ totalPrice(i) }}
+                  {{ v.product.price }}, x {{ v.quantity }} || Rp.{{
+                    totalPrice(i)
+                  }}
                 </p>
               </div>
             </div>
@@ -101,6 +103,13 @@
 
 <script>
 export default {
+  props: {
+    propsCart: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+  },
   data: () => ({
     mount_price: 0,
     mount: 3,
@@ -134,29 +143,29 @@ export default {
   computed: {
     summaryPrice(i) {
       let price = 0;
-      price = this.list[i].price * this.list[i].mount;
+      price = this.propsCart[i].product.price * this.propsCart[i].quantity;
 
       return price;
     },
   },
   methods: {
     methodPlus(i) {
-      this.list[i].mount++;
+      this.propsCart[i].quantity++;
     },
     minusMethod(i) {
-      if (this.list[i].mount <= 1) {
+      if (this.propsCart[i].quantity <= 1) {
         this.deleteMethod(i);
         return;
       }
-      this.list[i].mount--;
+      this.propsCart[i].quantity--;
     },
     deleteMethod(index) {
       console.log(index);
-      this.list.splice(index, 1);
+      this.propsCart.splice(index, 1);
     },
     totalPrice(i) {
       let price = 0;
-      price = this.list[i].price * this.list[i].mount;
+      price = this.propsCart[i].product.price * this.propsCart[i].quantity;
       return price;
     },
   },

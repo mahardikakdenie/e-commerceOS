@@ -5,7 +5,11 @@ import (
 	"api/middleware"
 	"api/modules/auth"
 	"api/modules/cart"
+	cart_customer_repo "api/modules/cart/customer/repository"
+	cart_customer_service "api/modules/cart/customer/service"
 	category_customer "api/modules/category/customer"
+
+	cart_customer_controller "api/modules/cart/customer/controller"
 	category_store "api/modules/category/store"
 	"api/modules/customer"
 	"api/modules/customer_auth"
@@ -103,6 +107,12 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	productCustomerService := product_customer.NewService(productCustomerRepository)
 	productCustomerController := controller.NewProductCustomerController(productCustomerService)
 
+	//
+
+	cartCustomerRepo := cart_customer_repo.NewRepository(db)
+	cartCustomerService := cart_customer_service.NewService(&cartCustomerRepo, customerRepository, productStoreRepository)
+	cartCustomerController := cart_customer_controller.NewCartsController(cartCustomerService)
+
 	MyMiddleware := middleware.MyMiddleware(authService)
 	CustomerMiddleware := middleware.CustomerMiddleware(customerAuthService)
 	cors := middleware.SetupCorsMiddleware()
@@ -124,4 +134,5 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	module.ProductStoreRoute(v1, productStoreController, MyMiddleware)
 	module.CategoryCustomerRoute(v1, categoryCustomerController, cors)
 	module.ProductCustomerRoute(v1, productCustomerController, cors)
+	module.CartCustomerRoute(v1, cartCustomerController, cors, CustomerMiddleware)
 }

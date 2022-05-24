@@ -57,3 +57,21 @@ func Views(views int) func(*gorm.DB) *gorm.DB {
 		return d
 	}
 }
+
+func WhereCustomerId(customer_id uint) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if customer_id != 0 {
+			return d.Where("customer_id = ?", customer_id)
+		}
+		return d
+	}
+}
+
+func WhereStoreId(storeId uint) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if storeId != 0 {
+			return d.Where("store_id = ?", storeId)
+		}
+		return d
+	}
+}
