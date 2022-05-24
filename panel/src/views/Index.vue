@@ -4,6 +4,7 @@
     <Navbar
       @logout="logout"
       :propsUser="computedMe"
+      :propsCart="computedCart"
       :propsCategory="computedCategories"
     />
     <router-view></router-view>
@@ -40,14 +41,29 @@ export default {
     computedCategories() {
       return this.$store.state.category.categories;
     },
+    computedCart() {
+      return this.$store.state.cart.data;
+    },
   },
   mounted() {
     this.getStore();
     this.me();
     this.checkLogout();
     this.getCategories();
+    this.getDataCart();
   },
   methods: {
+    getDataCart() {
+      this.$store
+        .dispatch("cart/getDataCart", {
+          entities: "Product,Store,Customer",
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            console.log("data Index => ", res.data.data);
+          }
+        });
+    },
     getStore() {
       this.$store
         .dispatch("store/getStore", {

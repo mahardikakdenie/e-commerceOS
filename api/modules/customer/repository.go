@@ -13,6 +13,7 @@ type Repository interface {
 	Created(customer entity.Customer) (entity.Customer, error)
 	Updated(customer entity.Customer) (entity.Customer, error)
 	Deleted(customer entity.Customer) (entity.Customer, error)
+	Me(id uint) (entity.Customer, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -31,6 +32,12 @@ func (r *repository) FindAll(q string, page int, per_page int, entites string) (
 func (r *repository) FindById(id int, entities string) (entity.Customer, error) {
 	var customer entity.Customer
 	err := r.db.Scopes(models.Entities(entities)).First(&customer, id).Error
+	return customer, err
+}
+
+func (r *repository) Me(id uint) (entity.Customer, error) {
+	var customer entity.Customer
+	err := r.db.Where("id = ? ", id).Preload("Store").First(&customer).Error
 	return customer, err
 }
 
