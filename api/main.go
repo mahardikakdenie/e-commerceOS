@@ -13,12 +13,12 @@ func main() {
 	router := gin.Default()
 	// ========================================== //
 	// ===== 1. Load .env file in GoDotEnv =====//
-	DB_HOST := dotenv.GoDotEnvVariable("DB_HOST")
-	DB_PORT := dotenv.GoDotEnvVariable("DB_PORT")
-	DB_USER := dotenv.GoDotEnvVariable("DB_USER")
-	DB_PASSWORD := dotenv.GoDotEnvVariable("DB_PASSWORD")
+	DB_HOST := dotenv.GoDotEnvVariable("DATABASE_URL")
+	DB_PORT := dotenv.GoDotEnvVariable("DATABASE_PORT")
+	DB_USER := dotenv.GoDotEnvVariable("DATABASE_USER")
+	DB_PASSWORD := dotenv.GoDotEnvVariable("DATABASE_PASSWORD")
 	DB_SSL_MODE := dotenv.GoDotEnvVariable("DB_SSL_MODE")
-	DB_NAME := dotenv.GoDotEnvVariable("DB_NAME")
+	DB_NAME := dotenv.GoDotEnvVariable("DATABASE_NAME")
 	// ==========================================//
 
 	// ===== 2. Connect to PostgreSQL =====//
