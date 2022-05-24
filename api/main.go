@@ -13,7 +13,7 @@ func main() {
 	router := gin.Default()
 	// ========================================== //
 	// ===== 1. Load .env file in GoDotEnv =====//
-	DB_HOST := dotenv.GoDotEnvVariable("DATABASE_URL")
+	DB_HOST := dotenv.GoDotEnvVariable("DATABASE_HOST")
 	DB_PORT := dotenv.GoDotEnvVariable("DATABASE_PORT")
 	DB_USER := dotenv.GoDotEnvVariable("DATABASE_USER")
 	DB_PASSWORD := dotenv.GoDotEnvVariable("DATABASE_PASSWORD")
