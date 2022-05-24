@@ -13,6 +13,7 @@ type Repository interface {
 	FindById(id uint, store_id string, entities string) (entity.Product, error)
 	Updated(product entity.Product) (entity.Product, error)
 	Deleted(product entity.Product) (entity.Product, error)
+	GetId(id uint, store_id uint) (entity.Product, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -46,5 +47,11 @@ func (r *repository) Updated(product entity.Product) (entity.Product, error) {
 
 func (r *repository) Deleted(product entity.Product) (entity.Product, error) {
 	err := r.db.Delete(&product).Error
+	return product, err
+}
+
+func (r *repository) GetId(id uint, store_id uint) (entity.Product, error) {
+	var product entity.Product
+	err := r.db.Where("store_id = ? ", store_id).First(&product, id).Error
 	return product, err
 }
