@@ -125,3 +125,74 @@ func (c *ProductCustomerController) Show(ctx *gin.Context) {
 		},
 	}, 1, 1)
 }
+
+func (c *ProductCustomerController) ShowProduct(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	store_slug := ctx.Param("store_slug")
+
+	product, err := c.service.ShowProductStore(uint(id), store_slug)
+	if err != nil {
+		helper.Exception(ctx, false, "Product not found", err)
+		return
+	}
+
+	helper.Responses(ctx, true, "Success", product_customer.ProductResponse{
+		Id:          product.ID,
+		Name:        product.Name,
+		Description: product.Description,
+		Price:       product.Price,
+		Stock:       product.Stock,
+		View:        product.View,
+		CategoryId:  product.CategoryId,
+		UserId:      product.UserId,
+		StoreId:     product.StoreId,
+		Entity: product_customer.Entity{
+			Category: product.Category,
+			User:     product.User,
+			Store:    product.Store,
+		},
+		Link: product_customer.Link{
+			Image: product.Image,
+		},
+	}, 1, 1)
+}
+
+func (c *ProductCustomerController) ByCategory(ctx *gin.Context) {
+	slug := ctx.Param("slug")
+	page, _ := strconv.Atoi(ctx.Query("page"))
+	per_page, _ := strconv.Atoi(ctx.Query("per_page"))
+	entities := ctx.Query("entities")
+	is_seller, _ := strconv.Atoi(ctx.Query("is_seller"))
+	store_id := ctx.Query("store_id")
+
+	products, err := c.service.FindProductByCategorySlug(slug, entities, page, per_page, is_seller, store_id)
+	if err != nil {
+		helper.Exception(ctx, false, "Product not found", err)
+	}
+
+	var data []product_customer.ProductResponse
+	for _, v := range products {
+		data = append(data, product_customer.ProductResponse{
+			Id:          v.ID,
+			Name:        v.Name,
+			Description: v.Description,
+			Price:       v.Price,
+			Stock:       v.Stock,
+			View:        v.View,
+			CategoryId:  v.CategoryId,
+			UserId:      v.UserId,
+			StoreId:     v.StoreId,
+			Entity: product_customer.Entity{
+				Category: v.Category,
+				User:     v.User,
+				Store:    v.Store,
+			},
+			Link: product_customer.Link{
+				Image: v.Image,
+			},
+		})
+	}
+
+	helper.Responses(ctx, true, "Success", data, page, per_page)
+
+}

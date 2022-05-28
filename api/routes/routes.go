@@ -15,6 +15,9 @@ import (
 	"api/modules/customer_auth"
 	orders "api/modules/order"
 	product_customer "api/modules/product/customer"
+	imageController "api/modules/product/image/controller"
+	imageRepository "api/modules/product/image/repository"
+	imageService "api/modules/product/image/service"
 	product_store "api/modules/product/store"
 	"api/modules/role"
 	"api/modules/store"
@@ -104,7 +107,7 @@ func Router(db *gorm.DB, router gin.IRouter) {
 
 	//
 	productCustomerRepository := product_customer.NewRepository(db)
-	productCustomerService := product_customer.NewService(productCustomerRepository)
+	productCustomerService := product_customer.NewService(productCustomerRepository, customerRepository, categoryCustomerRepository)
 	productCustomerController := controller.NewProductCustomerController(productCustomerService)
 
 	//
@@ -112,6 +115,11 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	cartCustomerRepo := cart_customer_repo.NewRepository(db)
 	cartCustomerService := cart_customer_service.NewService(&cartCustomerRepo, customerRepository, productStoreRepository)
 	cartCustomerController := cart_customer_controller.NewCartsController(cartCustomerService)
+
+	//
+	productImage := imageRepository.NewRepository(db)
+	productImageService := imageService.NewService(productImage, productCustomerRepository, userRepository)
+	productImageController := imageController.NewController(productImageService)
 
 	MyMiddleware := middleware.MyMiddleware(authService)
 	CustomerMiddleware := middleware.CustomerMiddleware(customerAuthService)
@@ -135,4 +143,5 @@ func Router(db *gorm.DB, router gin.IRouter) {
 	module.CategoryCustomerRoute(v1, categoryCustomerController, cors)
 	module.ProductCustomerRoute(v1, productCustomerController, cors)
 	module.CartCustomerRoute(v1, cartCustomerController, cors, CustomerMiddleware)
+	module.ProductImageRoute(v1, productImageController, cors, MyMiddleware)
 }

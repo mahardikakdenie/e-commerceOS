@@ -20,7 +20,7 @@
       <div class="col-lg-6">
         <div class="__brand">
           <div class="title--brand">
-            <h1 class="--brand" @click="$router.push(`/product/${i + 1}`)">
+            <h1 class="--brand" @click="$router.push(`product/${item.id}`)">
               {{ item.name }}
             </h1>
           </div>
