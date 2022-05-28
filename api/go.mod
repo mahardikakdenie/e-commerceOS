@@ -1,10 +1,12 @@
 module api
 
+// +heroku goVersion go1.15
 go 1.18
 
 require github.com/joho/godotenv v1.4.0
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/gosimple/slug v1.12.0 // indirect
 	github.com/gosimple/unidecode v1.0.1 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
@@ -15,6 +17,8 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
 	github.com/jackc/pgtype v1.10.0 // indirect
 	github.com/jackc/pgx/v4 v4.15.0 // indirect
+	github.com/mashingan/smapping v0.1.6 // indirect
+	github.com/ydhnwb/golang_heroku v0.0.0-20210506073955-57367826d58e // indirect
 )
 
 require (

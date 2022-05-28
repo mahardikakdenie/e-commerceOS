@@ -30,3 +30,14 @@ type Product struct {
 	StoreId     uint     `gorm:"foreignkey:StoreID"`
 	Store       Store    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
+
+type ProductImage struct {
+	gorm.Model
+	ProductId uint    `gorm:"foreignkey:ProductID" json:"product_id"`
+	Product   Product `json:"product" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Image     string  `gorm:"type:varchar(255)" json:"image"`
+	StoreId   uint    `gorm:"foreignkey:StoreID" json:"store_id"`
+	UserId    *uint   `gorm:"foreignkey:UserID" json:"user_id"`
+	Store     Store   `json:"store" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	User      User    `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+}

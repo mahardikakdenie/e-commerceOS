@@ -9,6 +9,7 @@ import (
 
 type Repository interface {
 	FindCategoryByStore(store_id string, entities string) ([]entity.Category, error)
+	FindCategoryBySlug(slug string, entities string) (entity.Category, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -22,4 +23,10 @@ func (r *repository) FindCategoryByStore(store_id string, entities string) ([]en
 	var categories []entity.Category
 	err := r.db.Scopes(models.ByStoreId(store_id), models.Entities(entities)).Find(&categories).Error
 	return categories, err
+}
+
+func (r *repository) FindCategoryBySlug(slug string, entities string) (entity.Category, error) {
+	var category entity.Category
+	err := r.db.Scopes(models.ByCategorySlug(slug), models.Entities(entities)).First(&category).Error
+	return category, err
 }

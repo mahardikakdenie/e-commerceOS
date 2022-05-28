@@ -12,15 +12,19 @@
 }
 
 .discount .card img {
-    /* position: fixed; */
-    border-radius: 9px;
+    /*position: fixed;
+    */border-radius: 9px;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     -ms-border-radius: 9px;
     -o-border-radius: 9px;
-    transition: .3s all cubic-bezier(.45,.05,.55,.95);
+    transition: 1s all cubic-bezier(.45,.05,.55,.95);
     overflow: hidden;
     position: relative;
+    -webkit-transition: 1s all cubic-bezier(.45,.05,.55,.95);
+    -moz-transition: 1s all cubic-bezier(.45,.05,.55,.95);
+    -ms-transition: 1s all cubic-bezier(.45,.05,.55,.95);
+    -o-transition: 1s all cubic-bezier(.45,.05,.55,.95);
 }
 
 .discount .card img:hover {
