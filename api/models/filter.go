@@ -75,3 +75,12 @@ func WhereStoreId(storeId uint) func(*gorm.DB) *gorm.DB {
 		return d
 	}
 }
+
+func WhereCategorySlug(slug string) func(*gorm.DB) *gorm.DB {
+	return func(d *gorm.DB) *gorm.DB {
+		if slug != "" {
+			return d.Where("slug = ?", slug)
+		}
+		return d
+	}
+}

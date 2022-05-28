@@ -33,6 +33,6 @@ func (r *repository) FindByEmail(email string) (entity.User, error) {
 
 func (r *repository) Me(user_id uint) (entity.User, error) {
 	var user entity.User
-	err := r.db.Preload("Role").Where("id = ?", user_id).Find(&user).Error
+	err := r.db.Preload("Role,Store").Where("id = ?", user_id).Find(&user).Error
 	return user, err
 }

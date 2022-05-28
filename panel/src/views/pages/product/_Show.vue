@@ -11,60 +11,98 @@
               </div>
               <div class="product-thumbs">
                 <carousel
-                  :items="4"
+                  v-if="images.length > 0"
+                  :items="5"
                   :nav="false"
                   :dots="false"
                   :autoplay="true"
                   class="product-thumbs-track ps-slider"
                 >
                   <div
-                    v-for="(v, index) in items"
+                    v-for="(v, index) in images"
                     :key="index"
                     :class="`pt ${
                       img_default === v.url ? 'active' : ''
                     } rounded-lg img--choice`"
+                    @click="clickImg(v.url)"
                   >
                     <img :src="v.url" alt="" height="160" />
+                  </div>
+                  <div>
+                    <img
+                      v-if="computedShow.link"
+                      :class="`pt ${
+                        computedShow.link.image === img_default ? 'active' : ''
+                      } rounded-lg img--choice`"
+                      @click="clickImg(computedShow.link.image)"
+                      :src="computedShow.link.image"
+                      height="160"
+                      alt=""
+                    />
                   </div>
                 </carousel>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="product-details text-left">
-                <div class="pd-title">
-                  <span>asdas</span>
+                <div v-if="computedShow.entities" class="pd-title">
+                  <span>{{ computedShow.entities.category.Name }} </span>
                   <h3>
-                    Kacamata Photocromic Korea 2 In 1 Kacamata Lensa Photocromic
-                    Anti Uv Wanita Dan Pria
+                    {{ computedShow.name }}
                   </h3>
                 </div>
+
                 <div class="pd-desc">
+                  <p></p>
+                  <p></p>
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Corporis, error officia. Rem aperiam laborum voluptatum vel,
-                    pariatur modi hic provident eum iure natus quos non a sequi,
-                    id accusantium! Autem.
+                    {{ computedShow.description }}
                   </p>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Quam possimus quisquam animi, commodi, nihil voluptate
-                    nostrum neque architecto illo officiis doloremque et
-                    corrupti cupiditate voluptatibus error illum. Commodi
-                    expedita animi nulla aspernatur. Id asperiores blanditiis,
-                    omnis repudiandae iste inventore cum, quam sint molestiae
-                    accusamus voluptates ex tempora illum sit perspiciatis.
-                    Nostrum dolor tenetur amet, illo natus magni veniam quia sit
-                    nihil dolores. Commodi ratione distinctio harum voluptatum
-                    velit facilis voluptas animi non laudantium, id dolorem
-                    atque perferendis enim ducimus? A exercitationem recusandae
-                    aliquam quod. Itaque inventore obcaecati, unde quam impedit
-                    praesentium veritatis quis beatae ea atque perferendis
-                    voluptates velit architecto?
-                  </p>
-                  <h4>$20</h4>
+                  <div class="card variants" style="">
+                    <!-- <img src="..." class="card-img-top" alt="..." /> -->
+                    <div class="card-body">
+                      <h3 class="card-title">Pilih Variant</h3>
+                      <div class="img">
+                        <img
+                          v-for="i in 4"
+                          :key="i"
+                          style="margin-right: 10px"
+                          width="80"
+                          class="img--variant"
+                          src="https://images.tokopedia.net/img/cache/100-square/VqbcmM/2021/12/16/63023bc9-f402-43be-b96c-f95d5eaa2a01.jpg"
+                          alt=""
+                        />
+                      </div>
+                      <form action="">
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label"
+                            >Catatan Kiriman</label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                          />
+                          <div id="emailHelp" class="form-text">
+                            *Catatan Untuk Penjual
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <p></p>
+                  <h4>Rp.{{ computedShow.price }}</h4>
+                  <h4>Stock : {{ computedShow.stock }}</h4>
                 </div>
+
                 <div class="quantity">
-                  <a class="cursor-pointer primary-btn pd-cart">Add To Cart</a>
+                  <button
+                    style="width: 100%"
+                    class="btn primary-btn rounded btn-full"
+                  >
+                    Add To Cart
+                  </button>
                 </div>
               </div>
             </div>
@@ -87,21 +125,19 @@ export default {
       type: Array,
       default: null,
     },
-    // img_default: {
-    //   type: String,
-    //   default: null,
-    // },
+
     data: {
       type: Object,
       default: null,
     },
   },
   data: () => ({
+    images: [],
     img_default:
       "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
     items: [
       {
-        url: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        url: "https://images.tokopedia.net/img/cache/200-square/VqbcmM/2021/7/30/55994347-7eaf-4d11-b9fe-6fc9183ed3f9.jpg.webp?ect=4g",
       },
       {
         url: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y2xvdGhlc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
@@ -114,7 +150,18 @@ export default {
       },
     ],
   }),
+  computed: {
+    computedShow() {
+      return this.$store.state.all_product.show;
+    },
+    computedImage() {
+      return this.$store.state.product_image.data;
+    },
+  },
   mounted() {
+    this.getDataShowProduct();
+    this.getDataProductImage();
+    // this.isDefault();
     // for (const item in this.data.galeries) {
     //   if (Object.hasOwnProperty.call(this.data.galeries, item)) {
     //     const img = this.data.galeries[item];
@@ -126,10 +173,41 @@ export default {
   },
   methods: {
     clickImg(url) {
+      console.log("before", this.computedShow.link.image);
       this.img_default = url;
+      console.log("before", this.computedShow.link.image);
     },
     addCart() {
       this.$emit("add-cart");
+    },
+    getDataShowProduct() {
+      this.$store
+        .dispatch("all_product/getDataShowProduct", {
+          id: this.$route.params.id,
+          store_id: localStorage.getItem("store_id"),
+          entities: "Category,User,Store",
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            this.img_default = res.data.data.link.image;
+            console.log("show data => ", res.data.data);
+          }
+        });
+    },
+    getDataProductImage() {
+      this.$store
+        .dispatch("product_image/getDataProductImage", {
+          product_id: this.$route.params.id,
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            this.images = res.data.data;
+            console.log("show data Image=> ", this.images);
+          }
+        });
+    },
+    isDefault() {
+      this.img_default = this.computedShow.link.image;
     },
   },
 };
@@ -147,5 +225,24 @@ export default {
 }
 .product-thumbs-track .img--choice:hover {
   border: 1px solid #e7ab3c;
+}
+.variants {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.variants .img {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.variants .img .img--variant {
+  transition: 1s;
+}
+
+.variants .img .img--variant:hover {
+  border: 1px solid #e7ab3c;
+  cursor: pointer;
 }
 </style>

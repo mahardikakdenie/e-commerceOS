@@ -11,6 +11,7 @@ type Repository interface {
 	FindAll(q string, entities string, page int, per_page int, category_id string, is_seller int, store_id string) ([]entity.Product, error)
 	FindById(id uint, entities string, category_id string, store_id string) (entity.Product, error)
 	FindByCategorySlug(slug string, entities string, page int, per_page int, is_seller int, store_id string) ([]entity.Product, error, error)
+	Updated(product entity.Product) (entity.Product, error)
 }
 type repository struct {
 	db *gorm.DB
@@ -44,4 +45,10 @@ func (r *repository) FindByCategorySlug(slug string, entities string, page int, 
 		Scopes(models.Entities(entities), models.Paginate(page, per_page), models.SearchCategoryId(category.ID), models.Views(is_seller), models.ByStoreId(store_id)).
 		Find(&products).Error
 	return products, err, category_err
+}
+
+func (r *repository) Updated(product entity.Product) (entity.Product, error) {
+	err := r.db.Model(&product).Updates(product).Error
+	return product, err
+
 }
