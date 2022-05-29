@@ -37,11 +37,6 @@ func main() {
 
 	// ==== 4. Start the server ===== //
 
-	if PORT == "" {
-		PORT = "8080"
-	}
-
-	// router.Run(":" + PORT)
 	if err := router.Run(fmt.Sprintf(":%s", PORT)); err != nil {
 		panic(err)
 	}
