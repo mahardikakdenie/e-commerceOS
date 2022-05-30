@@ -1,0 +1,13 @@
+{
+    "name": "AuthCustomer",
+    "alias": "authcustomer",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AuthCustomer\\Providers\\AuthCustomerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
